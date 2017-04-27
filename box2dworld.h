@@ -42,27 +42,7 @@ class Box2DJoint;
 class Box2DWorld;
 class Box2DRayCast;
 class ContactListener;
-class StepDriver;
-
-/**
- * Small utility class to synchronize the stepping with the framerate.
- */
-class StepDriver : public QAbstractAnimation
-{
-	Q_OBJECT
-
-public:
-	explicit StepDriver(Box2DWorld *world);
-
-	int duration() const;
-
-protected:
-	void updateCurrentTime(int);
-
-private:
-	Box2DWorld *mWorld;
-};
-
+class Box2DStepDriver;
 
 /**
  * A property group for getting profiling data.
@@ -178,6 +158,8 @@ public:
 	void SayGoodbye(b2Joint *joint);
 	void SayGoodbye(b2Fixture *fixture);
 
+	Q_INVOKABLE void enableFastrun();
+
 	Q_INVOKABLE void step();
 	Q_INVOKABLE void clearForces();
 	Q_INVOKABLE void rayCast(Box2DRayCast *rayCast,
@@ -211,7 +193,7 @@ private:
 	bool mComponentComplete;
 	bool mIsRunning;
 	bool mSynchronizing;
-	StepDriver *mStepDriver;
+	Box2DStepDriver *mStepDriver;
 	Box2DProfile *mProfile;
 	bool mEnableContactEvents;
 	float mPixelsPerMeter;

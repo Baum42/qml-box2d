@@ -1,6 +1,7 @@
 TEMPLATE = lib
 CONFIG += plugin
 QT += core qml
+QT -= gui
 TARGET = $$qtLibraryTarget(Box2Dcore)
 TARGETPATH = Box2Dcore
 API_VER=2.0

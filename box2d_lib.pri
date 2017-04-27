@@ -37,7 +37,8 @@ SOURCES += \
     $$PWD/box2dgearjoint.cpp \
     $$PWD/box2dropejoint.cpp \
     $$PWD/box2draycast.cpp \
-    $$PWD/box2dcoreplugin.cpp
+    $$PWD/box2dcoreplugin.cpp \
+    $$PWD/box2dstepdriver.cpp
 
 HEADERS += \
     $$PWD/box2dworld.h \
@@ -57,4 +58,5 @@ HEADERS += \
     $$PWD/box2dgearjoint.h \
     $$PWD/box2dropejoint.h \
     $$PWD/box2draycast.h \
-    $$PWD/box2dcoreplugin.h
+    $$PWD/box2dcoreplugin.h \
+    $$PWD/box2dstepdriver.h

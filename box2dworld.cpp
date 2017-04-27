@@ -32,24 +32,7 @@
 #include "box2dfixture.h"
 #include "box2djoint.h"
 #include "box2draycast.h"
-
-StepDriver::StepDriver(Box2DWorld *world)
-	: QAbstractAnimation(world)
-	, mWorld(world)
-{
-	setLoopCount(-1); // loop forever
-}
-
-int StepDriver::duration() const
-{
-	return 1000;
-}
-
-void StepDriver::updateCurrentTime(int)
-{
-	mWorld->step();
-}
-
+#include "box2dstepdriver.h"
 
 class ContactEvent
 {
@@ -132,7 +115,7 @@ Box2DWorld::Box2DWorld(QObject *parent) :
 	mComponentComplete(false),
 	mIsRunning(true),
 	mSynchronizing(false),
-	mStepDriver(new StepDriver(this)),
+	mStepDriver(new AnimationDriver(this)),
 	mProfile(new Box2DProfile(&mWorld, this)),
 	mEnableContactEvents(true),
 	mPixelsPerMeter(32.0f)
@@ -288,6 +271,16 @@ void Box2DWorld::SayGoodbye(b2Fixture *fixture)
 				mContactListener->removeEvent(i);
 		}
 	}
+}
+
+void Box2DWorld::enableFastrun()
+{
+	if(mComponentComplete && mIsRunning)
+		mStepDriver->stop();
+	delete mStepDriver;
+	mStepDriver = new EngineDriver(this);
+	if (mIsRunning)
+		mStepDriver->start();
 }
 
 void Box2DWorld::step()
