@@ -28,9 +28,12 @@
 #ifndef BOX2DWORLD_H
 #define BOX2DWORLD_H
 
+#include <QObject>
 #include <QAbstractAnimation>
-#include <QQuickItem>
-
+#include <QPointF>
+#include <QQmlParserStatus>
+#include <QVariant>
+#include <QQmlEngine>
 #include <Box2D.h>
 
 class Box2DContact;
