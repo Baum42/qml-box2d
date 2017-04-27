@@ -32,82 +32,82 @@
 
 class Box2DMotorJoint : public Box2DJoint
 {
-    Q_OBJECT
+	Q_OBJECT
 
-    Q_PROPERTY(QPointF linearOffset READ linearOffset WRITE setLinearOffset NOTIFY linearOffsetChanged)
-    Q_PROPERTY(float angularOffset READ angularOffset WRITE setAngularOffset NOTIFY angularOffsetChanged)
-    Q_PROPERTY(float maxForce READ maxForce WRITE setMaxForce NOTIFY maxForceChanged)
-    Q_PROPERTY(float maxTorque READ maxTorque WRITE setMaxTorque NOTIFY maxTorqueChanged)
-    Q_PROPERTY(float correctionFactor READ correctionFactor WRITE setCorrectionFactor NOTIFY correctionFactorChanged)
+	Q_PROPERTY(QPointF linearOffset READ linearOffset WRITE setLinearOffset NOTIFY linearOffsetChanged)
+	Q_PROPERTY(float angularOffset READ angularOffset WRITE setAngularOffset NOTIFY angularOffsetChanged)
+	Q_PROPERTY(float maxForce READ maxForce WRITE setMaxForce NOTIFY maxForceChanged)
+	Q_PROPERTY(float maxTorque READ maxTorque WRITE setMaxTorque NOTIFY maxTorqueChanged)
+	Q_PROPERTY(float correctionFactor READ correctionFactor WRITE setCorrectionFactor NOTIFY correctionFactorChanged)
 
 public:
-    explicit Box2DMotorJoint(QObject *parent = 0);
+	explicit Box2DMotorJoint(QObject *parent = 0);
 
-    QPointF linearOffset() const;
-    void setLinearOffset(const QPointF & linearOffset);
+	QPointF linearOffset() const;
+	void setLinearOffset(const QPointF & linearOffset);
 
-    float angularOffset() const;
-    void setAngularOffset(float angularOffset);
+	float angularOffset() const;
+	void setAngularOffset(float angularOffset);
 
-    float maxForce() const;
-    void setMaxForce(float maxForce);
+	float maxForce() const;
+	void setMaxForce(float maxForce);
 
-    float maxTorque() const;
-    void setMaxTorque(float maxTorque);
+	float maxTorque() const;
+	void setMaxTorque(float maxTorque);
 
-    float correctionFactor() const;
-    void setCorrectionFactor(float correctionFactor);
+	float correctionFactor() const;
+	void setCorrectionFactor(float correctionFactor);
 
-    b2MotorJoint *motorJoint() const;
+	b2MotorJoint *motorJoint() const;
 
 signals:
-    void linearOffsetChanged();
-    void angularOffsetChanged();
-    void maxForceChanged();
-    void maxTorqueChanged();
-    void correctionFactorChanged();
+	void linearOffsetChanged();
+	void angularOffsetChanged();
+	void maxForceChanged();
+	void maxTorqueChanged();
+	void correctionFactorChanged();
 
 protected:
-    b2Joint *createJoint();
+	b2Joint *createJoint();
 
 private:
-    QPointF m_linearOffset;
-    float m_angularOffset;
-    float m_maxForce;
-    float m_maxTorque;
-    float m_correctionFactor;
-    bool m_defaultLinearOffset;
-    bool m_defaultAngularOffset;
+	QPointF m_linearOffset;
+	float m_angularOffset;
+	float m_maxForce;
+	float m_maxTorque;
+	float m_correctionFactor;
+	bool m_defaultLinearOffset;
+	bool m_defaultAngularOffset;
 };
 
 inline QPointF Box2DMotorJoint::linearOffset() const
 {
-    return m_linearOffset;
+	return m_linearOffset;
 }
 
 inline float Box2DMotorJoint::angularOffset() const
 {
-    return m_angularOffset;
+	return m_angularOffset;
 }
 
 inline float Box2DMotorJoint::maxForce() const
 {
-    return m_maxForce;
+	return m_maxForce;
 }
 
 inline float Box2DMotorJoint::maxTorque() const
 {
-    return m_maxTorque;
+	return m_maxTorque;
 }
 
 inline float Box2DMotorJoint::correctionFactor() const
 {
-    return m_correctionFactor;
+	return m_correctionFactor;
 }
 
 inline b2MotorJoint *Box2DMotorJoint::motorJoint() const
 {
-    return static_cast<b2MotorJoint*>(joint());
+	return static_cast<b2MotorJoint*>(joint());
 }
 
 #endif // BOX2DMOTORJOINT_H

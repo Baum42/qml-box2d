@@ -31,72 +31,72 @@
 
 class Box2DMouseJoint : public Box2DJoint
 {
-    Q_OBJECT
+	Q_OBJECT
 
-    Q_PROPERTY(QPointF target READ target WRITE setTarget NOTIFY targetChanged)
-    Q_PROPERTY(float maxForce READ maxForce WRITE setMaxForce NOTIFY maxForceChanged)
-    Q_PROPERTY(float frequencyHz READ frequencyHz WRITE setFrequencyHz NOTIFY frequencyHzChanged)
-    Q_PROPERTY(float dampingRatio READ dampingRatio WRITE setDampingRatio NOTIFY dampingRatioChanged)
+	Q_PROPERTY(QPointF target READ target WRITE setTarget NOTIFY targetChanged)
+	Q_PROPERTY(float maxForce READ maxForce WRITE setMaxForce NOTIFY maxForceChanged)
+	Q_PROPERTY(float frequencyHz READ frequencyHz WRITE setFrequencyHz NOTIFY frequencyHzChanged)
+	Q_PROPERTY(float dampingRatio READ dampingRatio WRITE setDampingRatio NOTIFY dampingRatioChanged)
 
 public:
-    explicit Box2DMouseJoint(QObject *parent = 0);
+	explicit Box2DMouseJoint(QObject *parent = 0);
 
-    float dampingRatio() const;
-    void setDampingRatio(float dampingRatio);
+	float dampingRatio() const;
+	void setDampingRatio(float dampingRatio);
 
-    float frequencyHz() const;
-    void setFrequencyHz(float frequencyHz);
+	float frequencyHz() const;
+	void setFrequencyHz(float frequencyHz);
 
-    float maxForce() const;
-    void setMaxForce(float maxForce);
+	float maxForce() const;
+	void setMaxForce(float maxForce);
 
-    QPointF target() const;
-    void setTarget(const QPointF &target);
+	QPointF target() const;
+	void setTarget(const QPointF &target);
 
-    Q_INVOKABLE QPointF getReactionForce(float32 inv_dt) const;
-    Q_INVOKABLE float getReactionTorque(float32 inv_dt) const;
+	Q_INVOKABLE QPointF getReactionForce(float32 inv_dt) const;
+	Q_INVOKABLE float getReactionTorque(float32 inv_dt) const;
 
-    b2MouseJoint *mouseJoint() const;
+	b2MouseJoint *mouseJoint() const;
 
 signals:
-    void targetChanged();
-    void maxForceChanged();
-    void frequencyHzChanged();
-    void dampingRatioChanged();
+	void targetChanged();
+	void maxForceChanged();
+	void frequencyHzChanged();
+	void dampingRatioChanged();
 
 protected:
-    b2Joint *createJoint();
+	b2Joint *createJoint();
 
 private:
-    QPointF m_target;
-    float m_maxForce;
-    float m_frequencyHz;
-    float m_dampingRatio;
+	QPointF m_target;
+	float m_maxForce;
+	float m_frequencyHz;
+	float m_dampingRatio;
 };
 
 inline float Box2DMouseJoint::dampingRatio() const
 {
-    return m_dampingRatio;
+	return m_dampingRatio;
 }
 
 inline float Box2DMouseJoint::frequencyHz() const
 {
-    return m_frequencyHz;
+	return m_frequencyHz;
 }
 
 inline float Box2DMouseJoint::maxForce() const
 {
-    return m_maxForce;
+	return m_maxForce;
 }
 
 inline QPointF Box2DMouseJoint::target() const
 {
-    return m_target;
+	return m_target;
 }
 
 inline b2MouseJoint *Box2DMouseJoint::mouseJoint() const
 {
-    return static_cast<b2MouseJoint*>(joint());
+	return static_cast<b2MouseJoint*>(joint());
 }
 
 #endif // BOX2DMOUSEJOINT_H

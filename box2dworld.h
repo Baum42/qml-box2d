@@ -46,18 +46,18 @@ class StepDriver;
  */
 class StepDriver : public QAbstractAnimation
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit StepDriver(Box2DWorld *world);
+	explicit StepDriver(Box2DWorld *world);
 
-    int duration() const;
+	int duration() const;
 
 protected:
-    void updateCurrentTime(int);
+	void updateCurrentTime(int);
 
 private:
-    Box2DWorld *mWorld;
+	Box2DWorld *mWorld;
 };
 
 
@@ -66,42 +66,42 @@ private:
  */
 class Box2DProfile : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
-    Q_PROPERTY(float step READ step CONSTANT)
-    Q_PROPERTY(float collide READ collide CONSTANT)
-    Q_PROPERTY(float solve READ solve CONSTANT)
-    Q_PROPERTY(float solveInit READ solveInit CONSTANT)
-    Q_PROPERTY(float solveVelocity READ solveVelocity CONSTANT)
-    Q_PROPERTY(float solvePosition READ solvePosition CONSTANT)
-    Q_PROPERTY(float broadphase READ broadphase CONSTANT)
-    Q_PROPERTY(float solveTOI READ solveTOI CONSTANT)
-    Q_PROPERTY(float synchronize READ synchronize CONSTANT)
-    Q_PROPERTY(float emitSignals READ emitSignals CONSTANT)
+	Q_PROPERTY(float step READ step CONSTANT)
+	Q_PROPERTY(float collide READ collide CONSTANT)
+	Q_PROPERTY(float solve READ solve CONSTANT)
+	Q_PROPERTY(float solveInit READ solveInit CONSTANT)
+	Q_PROPERTY(float solveVelocity READ solveVelocity CONSTANT)
+	Q_PROPERTY(float solvePosition READ solvePosition CONSTANT)
+	Q_PROPERTY(float broadphase READ broadphase CONSTANT)
+	Q_PROPERTY(float solveTOI READ solveTOI CONSTANT)
+	Q_PROPERTY(float synchronize READ synchronize CONSTANT)
+	Q_PROPERTY(float emitSignals READ emitSignals CONSTANT)
 
 public:
-    explicit Box2DProfile(b2World *world, QObject *parent = 0)
-        : QObject(parent)
-        , mWorld(world)
-    {}
+	explicit Box2DProfile(b2World *world, QObject *parent = 0)
+		: QObject(parent)
+		, mWorld(world)
+	{}
 
-    float step() const;
-    float collide() const;
-    float solve() const;
-    float solveInit() const;
-    float solveVelocity() const;
-    float solvePosition() const;
-    float broadphase() const;
-    float solveTOI() const;
-    float synchronize() const;
-    float emitSignals() const;
+	float step() const;
+	float collide() const;
+	float solve() const;
+	float solveInit() const;
+	float solveVelocity() const;
+	float solvePosition() const;
+	float broadphase() const;
+	float solveTOI() const;
+	float synchronize() const;
+	float emitSignals() const;
 
 private:
-    friend class Box2DWorld;
+	friend class Box2DWorld;
 
-    b2World *mWorld;
-    float mSynchronize;
-    float mEmitSignals;
+	b2World *mWorld;
+	float mSynchronize;
+	float mEmitSignals;
 };
 
 
@@ -110,159 +110,159 @@ private:
  */
 class Box2DWorld : public QObject, public QQmlParserStatus, b2DestructionListener
 {
-    Q_OBJECT
+	Q_OBJECT
 
-    Q_PROPERTY(bool running READ isRunning WRITE setRunning NOTIFY runningChanged)
-    Q_PROPERTY(float timeStep READ timeStep WRITE setTimeStep NOTIFY timeStepChanged)
-    Q_PROPERTY(int velocityIterations READ velocityIterations WRITE setVelocityIterations NOTIFY velocityIterationsChanged)
-    Q_PROPERTY(int positionIterations READ positionIterations WRITE setPositionIterations NOTIFY positionIterationsChanged)
-    Q_PROPERTY(QPointF gravity READ gravity WRITE setGravity NOTIFY gravityChanged)
-    Q_PROPERTY(bool autoClearForces READ autoClearForces WRITE setAutoClearForces NOTIFY autoClearForcesChanged)
-    Q_PROPERTY(Box2DProfile *profile READ profile NOTIFY stepped)
-    Q_PROPERTY(float pixelsPerMeter READ pixelsPerMeter WRITE setPixelsPerMeter NOTIFY pixelsPerMeterChanged)
-    Q_PROPERTY(bool enableContactEvents READ enableContactEvents WRITE setEnableContactEvents NOTIFY enableContactEventsChanged)
+	Q_PROPERTY(bool running READ isRunning WRITE setRunning NOTIFY runningChanged)
+	Q_PROPERTY(float timeStep READ timeStep WRITE setTimeStep NOTIFY timeStepChanged)
+	Q_PROPERTY(int velocityIterations READ velocityIterations WRITE setVelocityIterations NOTIFY velocityIterationsChanged)
+	Q_PROPERTY(int positionIterations READ positionIterations WRITE setPositionIterations NOTIFY positionIterationsChanged)
+	Q_PROPERTY(QPointF gravity READ gravity WRITE setGravity NOTIFY gravityChanged)
+	Q_PROPERTY(bool autoClearForces READ autoClearForces WRITE setAutoClearForces NOTIFY autoClearForcesChanged)
+	Q_PROPERTY(Box2DProfile *profile READ profile NOTIFY stepped)
+	Q_PROPERTY(float pixelsPerMeter READ pixelsPerMeter WRITE setPixelsPerMeter NOTIFY pixelsPerMeterChanged)
+	Q_PROPERTY(bool enableContactEvents READ enableContactEvents WRITE setEnableContactEvents NOTIFY enableContactEventsChanged)
 
-    Q_INTERFACES(QQmlParserStatus)
+	Q_INTERFACES(QQmlParserStatus)
 
 public:
-    explicit Box2DWorld(QObject *parent = 0);
-    ~Box2DWorld();
+	explicit Box2DWorld(QObject *parent = 0);
+	~Box2DWorld();
 
-    float timeStep() const;
-    void setTimeStep(float timeStep);
+	float timeStep() const;
+	void setTimeStep(float timeStep);
 
-    bool isRunning() const;
-    void setRunning(bool running);
+	bool isRunning() const;
+	void setRunning(bool running);
 
-    int velocityIterations() const;
-    void setVelocityIterations(int iterations);
+	int velocityIterations() const;
+	void setVelocityIterations(int iterations);
 
-    int positionIterations() const;
-    void setPositionIterations(int iterations);
+	int positionIterations() const;
+	void setPositionIterations(int iterations);
 
-    QPointF gravity() const;
-    void setGravity(const QPointF &gravity);
+	QPointF gravity() const;
+	void setGravity(const QPointF &gravity);
 
-    bool autoClearForces() const;
-    void setAutoClearForces(bool autoClearForces);
+	bool autoClearForces() const;
+	void setAutoClearForces(bool autoClearForces);
 
-    Box2DProfile *profile() const;
+	Box2DProfile *profile() const;
 
-    bool enableContactEvents() const;
-    void setEnableContactEvents(bool enableContactEvents);
+	bool enableContactEvents() const;
+	void setEnableContactEvents(bool enableContactEvents);
 
-    float pixelsPerMeter() const;
-    void setPixelsPerMeter(float pixelsPerMeter);
+	float pixelsPerMeter() const;
+	void setPixelsPerMeter(float pixelsPerMeter);
 
-    float metersPerPixel() const;
-    float pixelsPerMeterY() const;
-    float metersPerPixelY() const;
+	float metersPerPixel() const;
+	float pixelsPerMeterY() const;
+	float metersPerPixelY() const;
 
-    float toPixels(float length) const;
-    float toMeters(float length) const;
+	float toPixels(float length) const;
+	float toMeters(float length) const;
 
-    QPointF toPixels(const b2Vec2 &vec) const;
-    b2Vec2 toMeters(const QPointF &point) const;
+	QPointF toPixels(const b2Vec2 &vec) const;
+	b2Vec2 toMeters(const QPointF &point) const;
 
-    bool isSynchronizing() const;
+	bool isSynchronizing() const;
 
-    void classBegin();
-    void componentComplete();
+	void classBegin();
+	void componentComplete();
 
-    b2World &world();
+	b2World &world();
 
-    // b2DestructionListener interface
-    void SayGoodbye(b2Joint *joint);
-    void SayGoodbye(b2Fixture *fixture);
+	// b2DestructionListener interface
+	void SayGoodbye(b2Joint *joint);
+	void SayGoodbye(b2Fixture *fixture);
 
-    Q_INVOKABLE void step();
-    Q_INVOKABLE void clearForces();
-    Q_INVOKABLE void rayCast(Box2DRayCast *rayCast,
-                             const QPointF &point1,
-                             const QPointF &point2);
-    static Box2DWorld * defaultWorld();
+	Q_INVOKABLE void step();
+	Q_INVOKABLE void clearForces();
+	Q_INVOKABLE void rayCast(Box2DRayCast *rayCast,
+							 const QPointF &point1,
+							 const QPointF &point2);
+	static Box2DWorld * defaultWorld();
 
 signals:
-    void preSolve(Box2DContact * contact);
-    void postSolve(Box2DContact * contact);
+	void preSolve(Box2DContact * contact);
+	void postSolve(Box2DContact * contact);
 
-    void timeStepChanged();
-    void velocityIterationsChanged();
-    void positionIterationsChanged();
-    void gravityChanged();
-    void autoClearForcesChanged();
-    void runningChanged();
-    void stepped();
-    void enableContactEventsChanged();
-    void pixelsPerMeterChanged();
+	void timeStepChanged();
+	void velocityIterationsChanged();
+	void positionIterationsChanged();
+	void gravityChanged();
+	void autoClearForcesChanged();
+	void runningChanged();
+	void stepped();
+	void enableContactEventsChanged();
+	void pixelsPerMeterChanged();
 
 protected:
-    void enableContactListener(bool enable);
+	void enableContactListener(bool enable);
 
 private:
-    b2World mWorld;
-    ContactListener *mContactListener;
-    float mTimeStep;
-    int mVelocityIterations;
-    int mPositionIterations;
-    bool mComponentComplete;
-    bool mIsRunning;
-    bool mSynchronizing;
-    StepDriver *mStepDriver;
-    Box2DProfile *mProfile;
-    bool mEnableContactEvents;
-    float mPixelsPerMeter;
+	b2World mWorld;
+	ContactListener *mContactListener;
+	float mTimeStep;
+	int mVelocityIterations;
+	int mPositionIterations;
+	bool mComponentComplete;
+	bool mIsRunning;
+	bool mSynchronizing;
+	StepDriver *mStepDriver;
+	Box2DProfile *mProfile;
+	bool mEnableContactEvents;
+	float mPixelsPerMeter;
 };
 
 
 inline float Box2DProfile::step() const
 {
-    return mWorld->GetProfile().step;
+	return mWorld->GetProfile().step;
 }
 
 inline float Box2DProfile::collide() const
 {
-    return mWorld->GetProfile().collide;
+	return mWorld->GetProfile().collide;
 }
 
 inline float Box2DProfile::solve() const
 {
-    return mWorld->GetProfile().solve;
+	return mWorld->GetProfile().solve;
 }
 
 inline float Box2DProfile::solveInit() const
 {
-    return mWorld->GetProfile().solveInit;
+	return mWorld->GetProfile().solveInit;
 }
 
 inline float Box2DProfile::solveVelocity() const
 {
-    return mWorld->GetProfile().solveVelocity;
+	return mWorld->GetProfile().solveVelocity;
 }
 
 inline float Box2DProfile::solvePosition() const
 {
-    return mWorld->GetProfile().solvePosition;
+	return mWorld->GetProfile().solvePosition;
 }
 
 inline float Box2DProfile::broadphase() const
 {
-    return mWorld->GetProfile().broadphase;
+	return mWorld->GetProfile().broadphase;
 }
 
 inline float Box2DProfile::solveTOI() const
 {
-    return mWorld->GetProfile().solveTOI;
+	return mWorld->GetProfile().solveTOI;
 }
 
 inline float Box2DProfile::synchronize() const
 {
-    return mSynchronize;
+	return mSynchronize;
 }
 
 inline float Box2DProfile::emitSignals() const
 {
-    return mEmitSignals;
+	return mEmitSignals;
 }
 
 
@@ -272,12 +272,12 @@ inline float Box2DProfile::emitSignals() const
  */
 inline float Box2DWorld::timeStep() const
 {
-    return mTimeStep;
+	return mTimeStep;
 }
 
 inline bool Box2DWorld::isRunning() const
 {
-    return mIsRunning;
+	return mIsRunning;
 }
 
 /**
@@ -286,7 +286,7 @@ inline bool Box2DWorld::isRunning() const
  */
 inline int Box2DWorld::velocityIterations() const
 {
-    return mVelocityIterations;
+	return mVelocityIterations;
 }
 
 /**
@@ -295,42 +295,42 @@ inline int Box2DWorld::velocityIterations() const
  */
 inline int Box2DWorld::positionIterations() const
 {
-    return mPositionIterations;
+	return mPositionIterations;
 }
 
 inline bool Box2DWorld::autoClearForces() const
 {
-    return mWorld.GetAutoClearForces();
+	return mWorld.GetAutoClearForces();
 }
 
 inline Box2DProfile *Box2DWorld::profile() const
 {
-    return mProfile;
+	return mProfile;
 }
 
 inline bool Box2DWorld::enableContactEvents() const
 {
-    return mEnableContactEvents;
+	return mEnableContactEvents;
 }
 
 inline float Box2DWorld::pixelsPerMeter() const
 {
-    return mPixelsPerMeter;
+	return mPixelsPerMeter;
 }
 
 inline float Box2DWorld::metersPerPixel() const
 {
-    return 1.0f / pixelsPerMeter();
+	return 1.0f / pixelsPerMeter();
 }
 
 inline float Box2DWorld::pixelsPerMeterY() const
 {
-    return -pixelsPerMeter(); // Y-axis inverted
+	return -pixelsPerMeter(); // Y-axis inverted
 }
 
 inline float Box2DWorld::metersPerPixelY() const
 {
-    return -metersPerPixel();
+	return -metersPerPixel();
 }
 
 /**
@@ -338,7 +338,7 @@ inline float Box2DWorld::metersPerPixelY() const
  */
 inline float Box2DWorld::toPixels(float length) const
 {
-    return length * pixelsPerMeter();
+	return length * pixelsPerMeter();
 }
 
 /**
@@ -346,7 +346,7 @@ inline float Box2DWorld::toPixels(float length) const
  */
 inline float Box2DWorld::toMeters(float length) const
 {
-    return length * metersPerPixel();
+	return length * metersPerPixel();
 }
 
 /**
@@ -354,8 +354,8 @@ inline float Box2DWorld::toMeters(float length) const
  */
 inline QPointF Box2DWorld::toPixels(const b2Vec2 &vec) const
 {
-    return QPointF(vec.x * pixelsPerMeter(),
-                   vec.y * pixelsPerMeterY());
+	return QPointF(vec.x * pixelsPerMeter(),
+				   vec.y * pixelsPerMeterY());
 }
 
 /**
@@ -363,23 +363,23 @@ inline QPointF Box2DWorld::toPixels(const b2Vec2 &vec) const
  */
 inline b2Vec2 Box2DWorld::toMeters(const QPointF &point) const
 {
-    return b2Vec2(point.x() * metersPerPixel(),
-                  point.y() * metersPerPixelY());
+	return b2Vec2(point.x() * metersPerPixel(),
+				  point.y() * metersPerPixelY());
 }
 
 inline bool Box2DWorld::isSynchronizing() const
 {
-    return mSynchronizing;
+	return mSynchronizing;
 }
 
 inline b2World &Box2DWorld::world()
 {
-    return mWorld;
+	return mWorld;
 }
 
 inline void Box2DWorld::clearForces()
 {
-    mWorld.ClearForces();
+	mWorld.ClearForces();
 }
 
 
@@ -388,7 +388,7 @@ inline void Box2DWorld::clearForces()
  */
 inline QPointF invertY(const b2Vec2 &vec)
 {
-    return QPointF(vec.x, -vec.y);
+	return QPointF(vec.x, -vec.y);
 }
 
 /**
@@ -396,7 +396,7 @@ inline QPointF invertY(const b2Vec2 &vec)
  */
 inline b2Vec2 invertY(const QPointF &vec)
 {
-    return b2Vec2(vec.x(), -vec.y());
+	return b2Vec2(vec.x(), -vec.y());
 }
 
 /**
@@ -404,7 +404,7 @@ inline b2Vec2 invertY(const QPointF &vec)
  */
 inline float toDegrees(float radians)
 {
-    return -radians * 180 / b2_pi;
+	return -radians * 180 / b2_pi;
 }
 
 /**
@@ -412,7 +412,7 @@ inline float toDegrees(float radians)
  */
 inline float toRadians(float degrees)
 {
-    return -degrees * b2_pi / 180;
+	return -degrees * b2_pi / 180;
 }
 
 

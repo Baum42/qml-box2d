@@ -30,168 +30,168 @@
 #include "box2dbody.h"
 
 Box2DRevoluteJoint::Box2DRevoluteJoint(QObject *parent)
-    : Box2DJoint(RevoluteJoint, parent)
-    , m_referenceAngle(0.0f)
-    , m_enableLimit(false)
-    , m_lowerAngle(0.0f)
-    , m_upperAngle(0.0f)
-    , m_enableMotor(false)
-    , m_motorSpeed(0.0f)
-    , m_maxMotorTorque(0.0f)
-    , m_defaultLocalAnchorA(true)
-    , m_defaultLocalAnchorB(true)
-    , m_defaultReferenceAngle(true)
+	: Box2DJoint(RevoluteJoint, parent)
+	, m_referenceAngle(0.0f)
+	, m_enableLimit(false)
+	, m_lowerAngle(0.0f)
+	, m_upperAngle(0.0f)
+	, m_enableMotor(false)
+	, m_motorSpeed(0.0f)
+	, m_maxMotorTorque(0.0f)
+	, m_defaultLocalAnchorA(true)
+	, m_defaultLocalAnchorB(true)
+	, m_defaultReferenceAngle(true)
 {
 }
 
 void Box2DRevoluteJoint::setLocalAnchorA(const QPointF &localAnchorA)
 {
-    m_defaultLocalAnchorA = false;
+	m_defaultLocalAnchorA = false;
 
-    if (m_localAnchorA == localAnchorA)
-        return;
+	if (m_localAnchorA == localAnchorA)
+		return;
 
-    m_localAnchorA = localAnchorA;
-    emit localAnchorAChanged();
+	m_localAnchorA = localAnchorA;
+	emit localAnchorAChanged();
 }
 
 void Box2DRevoluteJoint::setLocalAnchorB(const QPointF &localAnchorB)
 {
-    m_defaultLocalAnchorB = false;
+	m_defaultLocalAnchorB = false;
 
-    if (m_localAnchorB == localAnchorB)
-        return;
+	if (m_localAnchorB == localAnchorB)
+		return;
 
-    m_localAnchorB = localAnchorB;
-    emit localAnchorBChanged();
+	m_localAnchorB = localAnchorB;
+	emit localAnchorBChanged();
 }
 
 void Box2DRevoluteJoint::setReferenceAngle(float referenceAngle)
 {
-    m_defaultReferenceAngle = false;
+	m_defaultReferenceAngle = false;
 
-    if (m_referenceAngle == referenceAngle)
-        return;
+	if (m_referenceAngle == referenceAngle)
+		return;
 
-    m_referenceAngle = referenceAngle;
-    emit referenceAngleChanged();
+	m_referenceAngle = referenceAngle;
+	emit referenceAngleChanged();
 }
 
 void Box2DRevoluteJoint::setEnableLimit(bool enableLimit)
 {
-    if (m_enableLimit == enableLimit)
-        return;
+	if (m_enableLimit == enableLimit)
+		return;
 
-    m_enableLimit = enableLimit;
-    if (revoluteJoint())
-        revoluteJoint()->EnableLimit(enableLimit);
-    emit enableLimitChanged();
+	m_enableLimit = enableLimit;
+	if (revoluteJoint())
+		revoluteJoint()->EnableLimit(enableLimit);
+	emit enableLimitChanged();
 }
 
 void Box2DRevoluteJoint::setLowerAngle(float lowerAngle)
 {
-    if (m_lowerAngle == lowerAngle)
-        return;
+	if (m_lowerAngle == lowerAngle)
+		return;
 
-    m_lowerAngle = lowerAngle;
-    if (revoluteJoint())
-        revoluteJoint()->SetLimits(toRadians(lowerAngle),
-                                   toRadians(m_upperAngle));
-    emit lowerAngleChanged();
+	m_lowerAngle = lowerAngle;
+	if (revoluteJoint())
+		revoluteJoint()->SetLimits(toRadians(lowerAngle),
+								   toRadians(m_upperAngle));
+	emit lowerAngleChanged();
 }
 
 void Box2DRevoluteJoint::setUpperAngle(float upperAngle)
 {
-    if (m_upperAngle == upperAngle)
-        return;
+	if (m_upperAngle == upperAngle)
+		return;
 
-    m_upperAngle = upperAngle;
-    if (revoluteJoint())
-        revoluteJoint()->SetLimits(toRadians(m_lowerAngle),
-                                   toRadians(upperAngle));
-    emit upperAngleChanged();
+	m_upperAngle = upperAngle;
+	if (revoluteJoint())
+		revoluteJoint()->SetLimits(toRadians(m_lowerAngle),
+								   toRadians(upperAngle));
+	emit upperAngleChanged();
 }
 
 void Box2DRevoluteJoint::setEnableMotor(bool enableMotor)
 {
-    if (m_enableMotor == enableMotor)
-        return;
+	if (m_enableMotor == enableMotor)
+		return;
 
-    m_enableMotor = enableMotor;
-    if (revoluteJoint())
-        revoluteJoint()->EnableMotor(enableMotor);
-    emit enableMotorChanged();
+	m_enableMotor = enableMotor;
+	if (revoluteJoint())
+		revoluteJoint()->EnableMotor(enableMotor);
+	emit enableMotorChanged();
 }
 
 void Box2DRevoluteJoint::setMotorSpeed(float motorSpeed)
 {
-    if (m_motorSpeed == motorSpeed)
-        return;
+	if (m_motorSpeed == motorSpeed)
+		return;
 
-    m_motorSpeed = motorSpeed;
-    if (revoluteJoint())
-        revoluteJoint()->SetMotorSpeed(toRadians(motorSpeed));
-    emit motorSpeedChanged();
+	m_motorSpeed = motorSpeed;
+	if (revoluteJoint())
+		revoluteJoint()->SetMotorSpeed(toRadians(motorSpeed));
+	emit motorSpeedChanged();
 }
 
 void Box2DRevoluteJoint::setMaxMotorTorque(float maxMotorTorque)
 {
-    if (m_maxMotorTorque == maxMotorTorque)
-        return;
+	if (m_maxMotorTorque == maxMotorTorque)
+		return;
 
-    m_maxMotorTorque = maxMotorTorque;
-    if (revoluteJoint())
-        revoluteJoint()->SetMaxMotorTorque(maxMotorTorque);
-    emit maxMotorTorqueChanged();
+	m_maxMotorTorque = maxMotorTorque;
+	if (revoluteJoint())
+		revoluteJoint()->SetMaxMotorTorque(maxMotorTorque);
+	emit maxMotorTorqueChanged();
 }
 
 b2Joint *Box2DRevoluteJoint::createJoint()
 {
-    b2RevoluteJointDef jointDef;
-    initializeJointDef(jointDef);
+	b2RevoluteJointDef jointDef;
+	initializeJointDef(jointDef);
 
-    // Default localAnchorA to bodyA center
-    if (m_defaultLocalAnchorA)
-        jointDef.localAnchorA = jointDef.bodyA->GetLocalCenter();
-    else
-        jointDef.localAnchorA = world()->toMeters(m_localAnchorA);
+	// Default localAnchorA to bodyA center
+	if (m_defaultLocalAnchorA)
+		jointDef.localAnchorA = jointDef.bodyA->GetLocalCenter();
+	else
+		jointDef.localAnchorA = world()->toMeters(m_localAnchorA);
 
-    // Default localAnchorB to the same world position as localAnchorA
-    if (m_defaultLocalAnchorB) {
-        b2Vec2 anchorA = jointDef.bodyA->GetWorldPoint(jointDef.localAnchorA);
-        jointDef.localAnchorB = jointDef.bodyB->GetLocalPoint(anchorA);
-    } else {
-        jointDef.localAnchorB = world()->toMeters(m_localAnchorB);
-    }
+	// Default localAnchorB to the same world position as localAnchorA
+	if (m_defaultLocalAnchorB) {
+		b2Vec2 anchorA = jointDef.bodyA->GetWorldPoint(jointDef.localAnchorA);
+		jointDef.localAnchorB = jointDef.bodyB->GetLocalPoint(anchorA);
+	} else {
+		jointDef.localAnchorB = world()->toMeters(m_localAnchorB);
+	}
 
-    if (m_defaultReferenceAngle) {
-        float32 angleA = jointDef.bodyA->GetAngle();
-        float32 angleB = jointDef.bodyB->GetAngle();
-        jointDef.referenceAngle = angleB - angleA;
-    } else {
-        jointDef.referenceAngle = toRadians(m_referenceAngle);
-    }
+	if (m_defaultReferenceAngle) {
+		float32 angleA = jointDef.bodyA->GetAngle();
+		float32 angleB = jointDef.bodyB->GetAngle();
+		jointDef.referenceAngle = angleB - angleA;
+	} else {
+		jointDef.referenceAngle = toRadians(m_referenceAngle);
+	}
 
-    jointDef.enableLimit = m_enableLimit;
-    jointDef.lowerAngle = toRadians(m_lowerAngle);
-    jointDef.upperAngle = toRadians(m_upperAngle);
-    jointDef.enableMotor = m_enableMotor;
-    jointDef.motorSpeed = toRadians(m_motorSpeed);
-    jointDef.maxMotorTorque = m_maxMotorTorque;
+	jointDef.enableLimit = m_enableLimit;
+	jointDef.lowerAngle = toRadians(m_lowerAngle);
+	jointDef.upperAngle = toRadians(m_upperAngle);
+	jointDef.enableMotor = m_enableMotor;
+	jointDef.motorSpeed = toRadians(m_motorSpeed);
+	jointDef.maxMotorTorque = m_maxMotorTorque;
 
-    return world()->world().CreateJoint(&jointDef);
+	return world()->world().CreateJoint(&jointDef);
 }
 
 float Box2DRevoluteJoint::getJointAngle() const
 {
-    if (revoluteJoint())
-        return toDegrees(revoluteJoint()->GetJointAngle());
-    return 0.0;
+	if (revoluteJoint())
+		return toDegrees(revoluteJoint()->GetJointAngle());
+	return 0.0;
 }
 
 float Box2DRevoluteJoint::getJointSpeed() const
 {
-    if (revoluteJoint())
-        return revoluteJoint()->GetJointSpeed();
-    return 0.0;
+	if (revoluteJoint())
+		return revoluteJoint()->GetJointSpeed();
+	return 0.0;
 }

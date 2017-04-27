@@ -30,92 +30,92 @@
 
 
 Box2DContact::Box2DContact(b2Contact *contact) :
-    mContact(contact)
+	mContact(contact)
 {
 }
 
 void Box2DContact::setContact(b2Contact *contact)
 {
-    mContact = contact;
+	mContact = contact;
 }
 
 bool Box2DContact::isTouching()
 {
-    return mContact->IsTouching();
+	return mContact->IsTouching();
 }
 
 bool Box2DContact::isEnabled() const
 {
-    return mContact->IsEnabled();
+	return mContact->IsEnabled();
 }
 
 void Box2DContact::setEnabled(bool enabled)
 {
-    mContact->SetEnabled(enabled);
+	mContact->SetEnabled(enabled);
 }
 
 Box2DFixture *Box2DContact::fixtureA() const
 {
-    b2Fixture *fixture = mContact->GetFixtureA();
-    if(fixture)
-        return toBox2DFixture(fixture);
-    return NULL;
+	b2Fixture *fixture = mContact->GetFixtureA();
+	if(fixture)
+		return toBox2DFixture(fixture);
+	return NULL;
 }
 
 Box2DFixture *Box2DContact::fixtureB() const
 {
-    b2Fixture *fixture = mContact->GetFixtureB();
-    if(fixture)
-        return toBox2DFixture(fixture);
-    return NULL;
+	b2Fixture *fixture = mContact->GetFixtureB();
+	if(fixture)
+		return toBox2DFixture(fixture);
+	return NULL;
 }
 
 int Box2DContact::childIndexA() const
 {
-    return mContact->GetChildIndexA();
+	return mContact->GetChildIndexA();
 }
 
 int Box2DContact::childIndexB() const
 {
-    return mContact->GetChildIndexB();
+	return mContact->GetChildIndexB();
 }
 
 qreal Box2DContact::getFriction() const
 {
-    return mContact->GetFriction();
+	return mContact->GetFriction();
 }
 
 void Box2DContact::setFriction(qreal friction)
 {
-    mContact->SetFriction(friction);
+	mContact->SetFriction(friction);
 }
 
 void Box2DContact::resetFriction()
 {
-    mContact->ResetFriction();
+	mContact->ResetFriction();
 }
 
 qreal Box2DContact::getRestitution() const
 {
-    return mContact->GetRestitution();
+	return mContact->GetRestitution();
 }
 
 void Box2DContact::setRestitution(qreal restitution)
 {
-    mContact->SetRestitution(restitution);
+	mContact->SetRestitution(restitution);
 }
 
 void Box2DContact::resetRestitution()
 {
-    mContact->ResetRestitution();
+	mContact->ResetRestitution();
 }
 
 qreal Box2DContact::getTangentSpeed() const
 {
-    return mContact->GetTangentSpeed();
+	return mContact->GetTangentSpeed();
 }
 
 void Box2DContact::setTangentSpeed(qreal speed)
 {
-    mContact->SetTangentSpeed(speed);
+	mContact->SetTangentSpeed(speed);
 }

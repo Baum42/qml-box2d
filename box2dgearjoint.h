@@ -31,62 +31,62 @@
 
 class Box2DGearJoint : public Box2DJoint
 {
-    Q_OBJECT
+	Q_OBJECT
 
-    Q_PROPERTY(Box2DJoint *joint1 READ joint1 WRITE setJoint1 NOTIFY joint1Changed)
-    Q_PROPERTY(Box2DJoint *joint2 READ joint2 WRITE setJoint2 NOTIFY joint2Changed)
-    Q_PROPERTY(float ratio READ ratio WRITE setRatio NOTIFY ratioChanged)
+	Q_PROPERTY(Box2DJoint *joint1 READ joint1 WRITE setJoint1 NOTIFY joint1Changed)
+	Q_PROPERTY(Box2DJoint *joint2 READ joint2 WRITE setJoint2 NOTIFY joint2Changed)
+	Q_PROPERTY(float ratio READ ratio WRITE setRatio NOTIFY ratioChanged)
 
 public:
-    explicit Box2DGearJoint(QObject *parent = 0);
+	explicit Box2DGearJoint(QObject *parent = 0);
 
-    Box2DJoint *joint1() const;
-    void setJoint1(Box2DJoint *joint1);
+	Box2DJoint *joint1() const;
+	void setJoint1(Box2DJoint *joint1);
 
-    Box2DJoint *joint2() const;
-    void setJoint2(Box2DJoint *joint2);
+	Box2DJoint *joint2() const;
+	void setJoint2(Box2DJoint *joint2);
 
-    float ratio() const;
-    void setRatio(float ratio);
+	float ratio() const;
+	void setRatio(float ratio);
 
-    b2GearJoint *gearJoint() const;
+	b2GearJoint *gearJoint() const;
 
 signals:
-    void joint1Changed();
-    void joint2Changed();
-    void ratioChanged();
+	void joint1Changed();
+	void joint2Changed();
+	void ratioChanged();
 
 protected:
-    b2Joint *createJoint();
+	b2Joint *createJoint();
 
 private slots:
-    void joint1Created();
-    void joint2Created();
+	void joint1Created();
+	void joint2Created();
 
 private:
-    Box2DJoint *m_joint1;
-    Box2DJoint *m_joint2;
-    float m_ratio;
+	Box2DJoint *m_joint1;
+	Box2DJoint *m_joint2;
+	float m_ratio;
 };
 
 inline Box2DJoint *Box2DGearJoint::joint1() const
 {
-    return m_joint1;
+	return m_joint1;
 }
 
 inline Box2DJoint *Box2DGearJoint::joint2() const
 {
-    return m_joint2;
+	return m_joint2;
 }
 
 inline float Box2DGearJoint::ratio() const
 {
-    return m_ratio;
+	return m_ratio;
 }
 
 inline b2GearJoint *Box2DGearJoint::gearJoint() const
 {
-    return static_cast<b2GearJoint*>(joint());
+	return static_cast<b2GearJoint*>(joint());
 }
 
 #endif // BOX2DGEARJOINT_H

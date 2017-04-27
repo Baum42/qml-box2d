@@ -35,411 +35,411 @@
 #include "Common/b2Math.h"
 
 Box2DFixture::Box2DFixture(QObject *parent) :
-    QObject(parent),
-    mFixture(0),
-    mBody(0)
+	QObject(parent),
+	mFixture(0),
+	mBody(0)
 {
-    mFixtureDef.userData = this;
+	mFixtureDef.userData = this;
 }
 
 float Box2DFixture::density() const
 {
-    return mFixtureDef.density;
+	return mFixtureDef.density;
 }
 
 void Box2DFixture::setDensity(float density)
 {
-    if (mFixtureDef.density == density)
-        return;
+	if (mFixtureDef.density == density)
+		return;
 
-    mFixtureDef.density = density;
-    if (mFixture)
-        mFixture->SetDensity(density);
-    emit densityChanged();
+	mFixtureDef.density = density;
+	if (mFixture)
+		mFixture->SetDensity(density);
+	emit densityChanged();
 }
 
 float Box2DFixture::friction() const
 {
-    return mFixtureDef.friction;
+	return mFixtureDef.friction;
 }
 
 void Box2DFixture::setFriction(float friction)
 {
-    if (mFixtureDef.friction == friction)
-        return;
+	if (mFixtureDef.friction == friction)
+		return;
 
-    mFixtureDef.friction = friction;
-    if (mFixture)
-        mFixture->SetFriction(friction);
-    emit frictionChanged();
+	mFixtureDef.friction = friction;
+	if (mFixture)
+		mFixture->SetFriction(friction);
+	emit frictionChanged();
 }
 
 float Box2DFixture::restitution() const
 {
-    return mFixtureDef.restitution;
+	return mFixtureDef.restitution;
 }
 
 void Box2DFixture::setRestitution(float restitution)
 {
-    if (mFixtureDef.restitution == restitution)
-        return;
+	if (mFixtureDef.restitution == restitution)
+		return;
 
-    mFixtureDef.restitution = restitution;
-    if (mFixture)
-        mFixture->SetRestitution(restitution);
-    emit restitutionChanged();
+	mFixtureDef.restitution = restitution;
+	if (mFixture)
+		mFixture->SetRestitution(restitution);
+	emit restitutionChanged();
 }
 
 bool Box2DFixture::isSensor() const
 {
-    return mFixtureDef.isSensor;
+	return mFixtureDef.isSensor;
 }
 
 void Box2DFixture::setSensor(bool sensor)
 {
-    if (mFixtureDef.isSensor == sensor)
-        return;
+	if (mFixtureDef.isSensor == sensor)
+		return;
 
-    mFixtureDef.isSensor = sensor;
-    if (mFixture)
-        mFixture->SetSensor(sensor);
-    emit sensorChanged();
+	mFixtureDef.isSensor = sensor;
+	if (mFixture)
+		mFixture->SetSensor(sensor);
+	emit sensorChanged();
 }
 
 Box2DFixture::CategoryFlags Box2DFixture::categories() const
 {
-    return CategoryFlags(mFixtureDef.filter.categoryBits);
+	return CategoryFlags(mFixtureDef.filter.categoryBits);
 }
 
 void Box2DFixture::setCategories(CategoryFlags layers)
 {
-    if (mFixtureDef.filter.categoryBits == layers)
-        return;
+	if (mFixtureDef.filter.categoryBits == layers)
+		return;
 
-    mFixtureDef.filter.categoryBits = layers;
-    if (mFixture)
-        mFixture->SetFilterData(mFixtureDef.filter);
+	mFixtureDef.filter.categoryBits = layers;
+	if (mFixture)
+		mFixture->SetFilterData(mFixtureDef.filter);
 
-    emit categoriesChanged();
+	emit categoriesChanged();
 }
 
 Box2DFixture::CategoryFlags Box2DFixture::collidesWith() const
 {
-    return CategoryFlags(mFixtureDef.filter.maskBits);
+	return CategoryFlags(mFixtureDef.filter.maskBits);
 }
 
 void Box2DFixture::setCollidesWith(CategoryFlags layers)
 {
-    if (mFixtureDef.filter.maskBits == layers)
-        return;
+	if (mFixtureDef.filter.maskBits == layers)
+		return;
 
-    mFixtureDef.filter.maskBits = layers;
-    if (mFixture)
-        mFixture->SetFilterData(mFixtureDef.filter);
+	mFixtureDef.filter.maskBits = layers;
+	if (mFixture)
+		mFixture->SetFilterData(mFixtureDef.filter);
 
-    emit collidesWithChanged();
+	emit collidesWithChanged();
 }
 
 int Box2DFixture::groupIndex() const
 {
-    return mFixtureDef.filter.groupIndex;
+	return mFixtureDef.filter.groupIndex;
 }
 
 void Box2DFixture::setGroupIndex(int groupIndex)
 {
-    if (mFixtureDef.filter.groupIndex == groupIndex)
-        return;
+	if (mFixtureDef.filter.groupIndex == groupIndex)
+		return;
 
-    mFixtureDef.filter.groupIndex = groupIndex;
-    if (mFixture)
-        mFixture->SetFilterData(mFixtureDef.filter);
+	mFixtureDef.filter.groupIndex = groupIndex;
+	if (mFixture)
+		mFixture->SetFilterData(mFixtureDef.filter);
 
-    emit groupIndexChanged();
+	emit groupIndexChanged();
 }
 
 void Box2DFixture::initialize(Box2DBody *body)
 {
-    mBody = body;
-    b2Shape *shape = createShape();
-    if (!shape)
-        return;
+	mBody = body;
+	b2Shape *shape = createShape();
+	if (!shape)
+		return;
 
-    mFixtureDef.shape = shape;
-    mFixture = body->body()->CreateFixture(&mFixtureDef);
-    delete shape;
+	mFixtureDef.shape = shape;
+	mFixture = body->body()->CreateFixture(&mFixtureDef);
+	delete shape;
 }
 
 void Box2DFixture::recreateFixture()
 {
-    if (!mBody)
-        return;
-    if (mFixture)
-        mBody->body()->DestroyFixture(mFixture);
-    initialize(mBody);
+	if (!mBody)
+		return;
+	if (mFixture)
+		mBody->body()->DestroyFixture(mFixture);
+	initialize(mBody);
 }
 
 Box2DBody *Box2DFixture::getBody() const
 {
-    return mBody;
+	return mBody;
 }
 
 //=================== BOX =======================
 
 void Box2DBox::setX(qreal x)
 {
-    if (mPosition.x() == x)
-        return;
-    mPosition.setX(x);
-    recreateFixture();
-    emit xChanged();
+	if (mPosition.x() == x)
+		return;
+	mPosition.setX(x);
+	recreateFixture();
+	emit xChanged();
 }
 
 void Box2DBox::setY(qreal y)
 {
-    if (mPosition.y() == y)
-        return;
-    mPosition.setY(y);
-    recreateFixture();
-    emit yChanged();
+	if (mPosition.y() == y)
+		return;
+	mPosition.setY(y);
+	recreateFixture();
+	emit yChanged();
 }
 
 void Box2DBox::setWidth(qreal width)
 {
-    if (mSize.width() == width)
-        return;
-    mSize.setWidth(width);
-    recreateFixture();
-    emit widthChanged();
+	if (mSize.width() == width)
+		return;
+	mSize.setWidth(width);
+	recreateFixture();
+	emit widthChanged();
 }
 
 void Box2DBox::setHeight(qreal height)
 {
-    if (mSize.height() == height)
-        return;
-    mSize.setHeight(height);
-    recreateFixture();
-    emit heightChanged();
+	if (mSize.height() == height)
+		return;
+	mSize.setHeight(height);
+	recreateFixture();
+	emit heightChanged();
 }
 
 void Box2DBox::setRotation(qreal rotation)
 {
-    if (mRotation == rotation)
-        return;
-    mRotation = rotation;
-    recreateFixture();
-    emit rotationChanged();
+	if (mRotation == rotation)
+		return;
+	mRotation = rotation;
+	recreateFixture();
+	emit rotationChanged();
 }
 
 b2Shape *Box2DBox::createShape()
 {
-    const qreal halfWidth = width() * 0.5;
-    const qreal halfHeight = height() * 0.5;
-    const QPointF center(x() + halfWidth,
-                         y() + halfHeight);
+	const qreal halfWidth = width() * 0.5;
+	const qreal halfHeight = height() * 0.5;
+	const QPointF center(x() + halfWidth,
+						 y() + halfHeight);
 
-    b2PolygonShape *shape = new b2PolygonShape;
-    shape->SetAsBox(b2Max(mBody->world()->toMeters(halfWidth), b2_linearSlop),
-                    b2Max(mBody->world()->toMeters(halfHeight), b2_linearSlop),
-                    mBody->world()->toMeters(center),
-                    toRadians(rotation()));
+	b2PolygonShape *shape = new b2PolygonShape;
+	shape->SetAsBox(b2Max(mBody->world()->toMeters(halfWidth), b2_linearSlop),
+					b2Max(mBody->world()->toMeters(halfHeight), b2_linearSlop),
+					mBody->world()->toMeters(center),
+					toRadians(rotation()));
 
-    return shape;
+	return shape;
 }
 
 //=================== CIRCLE =======================
 
 void Box2DCircle::setX(qreal x)
 {
-    if (mPosition.x() == x)
-        return;
-    mPosition.setX(x);
-    recreateFixture();
-    emit xChanged();
+	if (mPosition.x() == x)
+		return;
+	mPosition.setX(x);
+	recreateFixture();
+	emit xChanged();
 }
 
 void Box2DCircle::setY(qreal y)
 {
-    if (mPosition.y() == y)
-        return;
-    mPosition.setY(y);
-    recreateFixture();
-    emit yChanged();
+	if (mPosition.y() == y)
+		return;
+	mPosition.setY(y);
+	recreateFixture();
+	emit yChanged();
 }
 
 void Box2DCircle::setRadius(float radius)
 {
-    if (mRadius == radius)
-        return;
-    mRadius = radius;
-    recreateFixture();
-    emit radiusChanged();
+	if (mRadius == radius)
+		return;
+	mRadius = radius;
+	recreateFixture();
+	emit radiusChanged();
 }
 
 b2Shape *Box2DCircle::createShape()
 {
-    b2CircleShape *shape = new b2CircleShape;
+	b2CircleShape *shape = new b2CircleShape;
 
-    shape->m_radius = mBody->world()->toMeters(radius());
-    shape->m_p = mBody->world()->toMeters(position() + QPointF(radius(), radius()));
+	shape->m_radius = mBody->world()->toMeters(radius());
+	shape->m_p = mBody->world()->toMeters(position() + QPointF(radius(), radius()));
 
-    return shape;
+	return shape;
 }
 
 //=================== POLYGON =======================
 
 void Box2DPolygon::setVertices(const QVariantList &vertices)
 {
-    if (vertices == mVertices)
-        return;
+	if (vertices == mVertices)
+		return;
 
-    mVertices = vertices;
-    recreateFixture();
-    emit verticesChanged();
+	mVertices = vertices;
+	recreateFixture();
+	emit verticesChanged();
 }
 
 b2Shape *Box2DPolygon::createShape()
 {
-    const int count = mVertices.length();
-    if (count < 2 || count > b2_maxPolygonVertices) {
-        qWarning() << "Polygon: Invalid number of vertices:" << count;
-        return 0;
-    }
+	const int count = mVertices.length();
+	if (count < 2 || count > b2_maxPolygonVertices) {
+		qWarning() << "Polygon: Invalid number of vertices:" << count;
+		return 0;
+	}
 
-    QScopedArrayPointer<b2Vec2> vertices(new b2Vec2[count]);
+	QScopedArrayPointer<b2Vec2> vertices(new b2Vec2[count]);
 
-    for (int i = 0; i < count; ++i) {
-        vertices[i] = mBody->world()->toMeters(mVertices.at(i).toPointF());
+	for (int i = 0; i < count; ++i) {
+		vertices[i] = mBody->world()->toMeters(mVertices.at(i).toPointF());
 
-        if (i > 0) {
-            if (b2DistanceSquared(vertices[i - 1], vertices[i]) <= b2_linearSlop * b2_linearSlop) {
-                qWarning() << "Polygon: vertices are too close together";
-                return 0;
-            }
-        }
-    }
+		if (i > 0) {
+			if (b2DistanceSquared(vertices[i - 1], vertices[i]) <= b2_linearSlop * b2_linearSlop) {
+				qWarning() << "Polygon: vertices are too close together";
+				return 0;
+			}
+		}
+	}
 
-    b2PolygonShape *shape = new b2PolygonShape;
-    shape->Set(vertices.data(), count);
+	b2PolygonShape *shape = new b2PolygonShape;
+	shape->Set(vertices.data(), count);
 
-    return shape;
+	return shape;
 }
 
 //=================== CHAIN =======================
 
 Box2DChain::Box2DChain(QQuickItem *parent) :
-    Box2DFixture(parent),
-    mLoop(false),
-    mPrevVertexFlag(false),
-    mNextVertexFlag(false)
+	Box2DFixture(parent),
+	mLoop(false),
+	mPrevVertexFlag(false),
+	mNextVertexFlag(false)
 {
 }
 
 void Box2DChain::setVertices(const QVariantList &vertices)
 {
-    if (vertices == mVertices)
-        return;
+	if (vertices == mVertices)
+		return;
 
-    mVertices = vertices;
-    recreateFixture();
-    emit verticesChanged();
+	mVertices = vertices;
+	recreateFixture();
+	emit verticesChanged();
 }
 
 void Box2DChain::setLoop(bool loop)
 {
-    if (mLoop == loop)
-        return;
+	if (mLoop == loop)
+		return;
 
-    mLoop = loop;
-    recreateFixture();
-    emit loopChanged();
+	mLoop = loop;
+	recreateFixture();
+	emit loopChanged();
 }
 
 void Box2DChain::setPrevVertex(const QPointF &prevVertex)
 {
-    if (mPrevVertexFlag && mPrevVertex == prevVertex)
-        return;
+	if (mPrevVertexFlag && mPrevVertex == prevVertex)
+		return;
 
-    mPrevVertex = prevVertex;
-    mPrevVertexFlag = true;
-    recreateFixture();
-    emit prevVertexChanged();
+	mPrevVertex = prevVertex;
+	mPrevVertexFlag = true;
+	recreateFixture();
+	emit prevVertexChanged();
 }
 
 void Box2DChain::setNextVertex(const QPointF &nextVertex)
 {
-    if (mNextVertexFlag && mNextVertex == nextVertex)
-        return;
+	if (mNextVertexFlag && mNextVertex == nextVertex)
+		return;
 
-    mNextVertex = nextVertex;
-    mNextVertexFlag = true;
-    recreateFixture();
-    emit nextVertexChanged();
+	mNextVertex = nextVertex;
+	mNextVertexFlag = true;
+	recreateFixture();
+	emit nextVertexChanged();
 }
 
 b2Shape *Box2DChain::createShape()
 {
-    const int count = mVertices.length();
+	const int count = mVertices.length();
 
-    if (count < 2 || (mLoop && count < 3)) {
-        qWarning() << "Chain: Invalid number of vertices:" << count;
-        return 0;
-    }
+	if (count < 2 || (mLoop && count < 3)) {
+		qWarning() << "Chain: Invalid number of vertices:" << count;
+		return 0;
+	}
 
-    QScopedArrayPointer<b2Vec2> vertices(new b2Vec2[count]);
+	QScopedArrayPointer<b2Vec2> vertices(new b2Vec2[count]);
 
-    for (int i = 0; i < count; ++i) {
-        vertices[i] = mBody->world()->toMeters(mVertices.at(i).toPointF());
+	for (int i = 0; i < count; ++i) {
+		vertices[i] = mBody->world()->toMeters(mVertices.at(i).toPointF());
 
-        if (i > 0) {
-            if (b2DistanceSquared(vertices[i - 1], vertices[i]) <= b2_linearSlop * b2_linearSlop) {
-                qWarning() << "Chain: vertices are too close together";
-                return 0;
-            }
-        }
-    }
+		if (i > 0) {
+			if (b2DistanceSquared(vertices[i - 1], vertices[i]) <= b2_linearSlop * b2_linearSlop) {
+				qWarning() << "Chain: vertices are too close together";
+				return 0;
+			}
+		}
+	}
 
-    b2ChainShape *shape = new b2ChainShape;
-    if (mLoop) {
-        shape->CreateLoop(vertices.data(), count);
-    } else {
-        shape->CreateChain(vertices.data(), count);
+	b2ChainShape *shape = new b2ChainShape;
+	if (mLoop) {
+		shape->CreateLoop(vertices.data(), count);
+	} else {
+		shape->CreateChain(vertices.data(), count);
 
-        if (mPrevVertexFlag)
-            shape->SetPrevVertex(mBody->world()->toMeters(mPrevVertex));
-        if (mNextVertexFlag)
-            shape->SetNextVertex(mBody->world()->toMeters(mNextVertex));
-    }
+		if (mPrevVertexFlag)
+			shape->SetPrevVertex(mBody->world()->toMeters(mPrevVertex));
+		if (mNextVertexFlag)
+			shape->SetNextVertex(mBody->world()->toMeters(mNextVertex));
+	}
 
-    return shape;
+	return shape;
 }
 
 //=================== EDGE =======================
 
 void Box2DEdge::setVertices(const QVariantList &vertices)
 {
-    if (vertices == mVertices)
-        return;
+	if (vertices == mVertices)
+		return;
 
-    mVertices = vertices;
-    recreateFixture();
-    emit verticesChanged();
+	mVertices = vertices;
+	recreateFixture();
+	emit verticesChanged();
 }
 
 b2Shape *Box2DEdge::createShape()
 {
-    const int count = mVertices.length();
-    if (count != 2) {
-        qWarning() << "Edge: Invalid number of vertices:" << count;
-        return 0;
-    }
-    const b2Vec2 vertex1 = mBody->world()->toMeters(mVertices.at(0).toPointF());
-    const b2Vec2 vertex2 = mBody->world()->toMeters(mVertices.at(1).toPointF());
-    if (b2DistanceSquared(vertex1, vertex2) <= b2_linearSlop * b2_linearSlop) {
-        qWarning() << "Edge: vertices are too close together";
-        return 0;
-    }
-    b2EdgeShape *shape = new b2EdgeShape;
-    shape->Set(vertex1, vertex2);
+	const int count = mVertices.length();
+	if (count != 2) {
+		qWarning() << "Edge: Invalid number of vertices:" << count;
+		return 0;
+	}
+	const b2Vec2 vertex1 = mBody->world()->toMeters(mVertices.at(0).toPointF());
+	const b2Vec2 vertex2 = mBody->world()->toMeters(mVertices.at(1).toPointF());
+	if (b2DistanceSquared(vertex1, vertex2) <= b2_linearSlop * b2_linearSlop) {
+		qWarning() << "Edge: vertices are too close together";
+		return 0;
+	}
+	b2EdgeShape *shape = new b2EdgeShape;
+	shape->Set(vertex1, vertex2);
 
-    return shape;
+	return shape;
 }

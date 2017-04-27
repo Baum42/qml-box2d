@@ -29,101 +29,101 @@
 #include "box2dbody.h"
 
 Box2DFrictionJoint::Box2DFrictionJoint(QObject *parent)
-    : Box2DJoint(FrictionJoint, parent)
-    , m_maxForce(0.0f)
-    , m_maxTorque(0.0f)
-    , m_defaultLocalAnchorA(true)
-    , m_defaultLocalAnchorB(true)
+	: Box2DJoint(FrictionJoint, parent)
+	, m_maxForce(0.0f)
+	, m_maxTorque(0.0f)
+	, m_defaultLocalAnchorA(true)
+	, m_defaultLocalAnchorB(true)
 {
 }
 
 void Box2DFrictionJoint::setLocalAnchorA(const QPointF &localAnchorA)
 {
-    m_defaultLocalAnchorA = false;
+	m_defaultLocalAnchorA = false;
 
-    if (m_localAnchorA == localAnchorA)
-        return;
+	if (m_localAnchorA == localAnchorA)
+		return;
 
-    m_localAnchorA = localAnchorA;
-    emit localAnchorAChanged();
+	m_localAnchorA = localAnchorA;
+	emit localAnchorAChanged();
 }
 
 void Box2DFrictionJoint::setLocalAnchorB(const QPointF &localAnchorB)
 {
-    m_defaultLocalAnchorB = false;
+	m_defaultLocalAnchorB = false;
 
-    if (m_localAnchorB == localAnchorB)
-        return;
+	if (m_localAnchorB == localAnchorB)
+		return;
 
-    m_localAnchorB = localAnchorB;
-    emit localAnchorBChanged();
+	m_localAnchorB = localAnchorB;
+	emit localAnchorBChanged();
 }
 
 void Box2DFrictionJoint::setMaxForce(float maxForce)
 {
-    if (!(b2IsValid(maxForce) && maxForce >= 0.0f)) {
-        qWarning() << "FrictionJoint: Invalid maxForce:" << maxForce;
-        return;
-    }
-    if (m_maxForce == maxForce)
-        return;
+	if (!(b2IsValid(maxForce) && maxForce >= 0.0f)) {
+		qWarning() << "FrictionJoint: Invalid maxForce:" << maxForce;
+		return;
+	}
+	if (m_maxForce == maxForce)
+		return;
 
-    m_maxForce = maxForce;
-    if (frictionJoint())
-        frictionJoint()->SetMaxForce(maxForce);
-    emit maxForceChanged();
+	m_maxForce = maxForce;
+	if (frictionJoint())
+		frictionJoint()->SetMaxForce(maxForce);
+	emit maxForceChanged();
 }
 
 void Box2DFrictionJoint::setMaxTorque(float maxTorque)
 {
-    if (!(b2IsValid(maxTorque) && maxTorque >= 0.0f)) {
-        qWarning() << "FrictionJoint: Invalid maxTorque:" << maxTorque;
-        return;
-    }
-    if (m_maxTorque == maxTorque)
-        return;
+	if (!(b2IsValid(maxTorque) && maxTorque >= 0.0f)) {
+		qWarning() << "FrictionJoint: Invalid maxTorque:" << maxTorque;
+		return;
+	}
+	if (m_maxTorque == maxTorque)
+		return;
 
-    m_maxTorque = maxTorque;
-    if (frictionJoint())
-        frictionJoint()->SetMaxTorque(maxTorque);
-    emit maxTorqueChanged();
+	m_maxTorque = maxTorque;
+	if (frictionJoint())
+		frictionJoint()->SetMaxTorque(maxTorque);
+	emit maxTorqueChanged();
 }
 
 b2Joint *Box2DFrictionJoint::createJoint()
 {
-    b2FrictionJointDef jointDef;
-    initializeJointDef(jointDef);
+	b2FrictionJointDef jointDef;
+	initializeJointDef(jointDef);
 
-    // Default localAnchorA to bodyA center
-    if (m_defaultLocalAnchorA)
-        jointDef.localAnchorA = jointDef.bodyA->GetLocalCenter();
-    else
-        jointDef.localAnchorA = world()->toMeters(m_localAnchorA);
+	// Default localAnchorA to bodyA center
+	if (m_defaultLocalAnchorA)
+		jointDef.localAnchorA = jointDef.bodyA->GetLocalCenter();
+	else
+		jointDef.localAnchorA = world()->toMeters(m_localAnchorA);
 
-    // Default localAnchorB to the same world position as localAnchorA
-    if (m_defaultLocalAnchorB) {
-        b2Vec2 anchorA = jointDef.bodyA->GetWorldPoint(jointDef.localAnchorA);
-        jointDef.localAnchorB = jointDef.bodyB->GetLocalPoint(anchorA);
-    } else {
-        jointDef.localAnchorB = world()->toMeters(m_localAnchorB);
-    }
+	// Default localAnchorB to the same world position as localAnchorA
+	if (m_defaultLocalAnchorB) {
+		b2Vec2 anchorA = jointDef.bodyA->GetWorldPoint(jointDef.localAnchorA);
+		jointDef.localAnchorB = jointDef.bodyB->GetLocalPoint(anchorA);
+	} else {
+		jointDef.localAnchorB = world()->toMeters(m_localAnchorB);
+	}
 
-    jointDef.maxForce = m_maxForce;
-    jointDef.maxTorque = m_maxTorque;
+	jointDef.maxForce = m_maxForce;
+	jointDef.maxTorque = m_maxTorque;
 
-    return world()->world().CreateJoint(&jointDef);
+	return world()->world().CreateJoint(&jointDef);
 }
 
 QPointF Box2DFrictionJoint::getReactionForce(float32 inv_dt) const
 {
-    if (frictionJoint())
-        return invertY(frictionJoint()->GetReactionForce(inv_dt));
-    return QPointF();
+	if (frictionJoint())
+		return invertY(frictionJoint()->GetReactionForce(inv_dt));
+	return QPointF();
 }
 
 float Box2DFrictionJoint::getReactionTorque(float32 inv_dt) const
 {
-    if (frictionJoint())
-        return frictionJoint()->GetReactionTorque(inv_dt);
-    return 0.0f;
+	if (frictionJoint())
+		return frictionJoint()->GetReactionTorque(inv_dt);
+	return 0.0f;
 }

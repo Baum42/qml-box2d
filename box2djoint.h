@@ -39,113 +39,113 @@ class Box2DWorld;
 
 class Box2DJoint : public QObject, public QQmlParserStatus
 {
-    Q_OBJECT
-    Q_INTERFACES(QQmlParserStatus)
+	Q_OBJECT
+	Q_INTERFACES(QQmlParserStatus)
 
-    Q_ENUMS(JointType)
-    Q_PROPERTY(JointType jointType READ jointType CONSTANT)
-    Q_PROPERTY(bool collideConnected READ collideConnected WRITE setCollideConnected NOTIFY collideConnectedChanged)
-    Q_PROPERTY(Box2DBody *bodyA READ bodyA WRITE setBodyA NOTIFY bodyAChanged)
-    Q_PROPERTY(Box2DBody *bodyB READ bodyB WRITE setBodyB NOTIFY bodyBChanged)
+	Q_ENUMS(JointType)
+	Q_PROPERTY(JointType jointType READ jointType CONSTANT)
+	Q_PROPERTY(bool collideConnected READ collideConnected WRITE setCollideConnected NOTIFY collideConnectedChanged)
+	Q_PROPERTY(Box2DBody *bodyA READ bodyA WRITE setBodyA NOTIFY bodyAChanged)
+	Q_PROPERTY(Box2DBody *bodyB READ bodyB WRITE setBodyB NOTIFY bodyBChanged)
 
 public:
-    enum JointType { // Matches b2JointType
-        UnknownJoint,
-        RevoluteJoint,
-        PrismaticJoint,
-        DistanceJoint,
-        PulleyJoint,
-        MouseJoint,
-        GearJoint,
-        WheelJoint,
-        WeldJoint,
-        FrictionJoint,
-        RopeJoint,
-        MotorJoint
-    };
+	enum JointType { // Matches b2JointType
+		UnknownJoint,
+		RevoluteJoint,
+		PrismaticJoint,
+		DistanceJoint,
+		PulleyJoint,
+		MouseJoint,
+		GearJoint,
+		WheelJoint,
+		WeldJoint,
+		FrictionJoint,
+		RopeJoint,
+		MotorJoint
+	};
 
-    Box2DJoint(JointType jointType, QObject *parent = 0);
-    ~Box2DJoint();
+	Box2DJoint(JointType jointType, QObject *parent = 0);
+	~Box2DJoint();
 
-    JointType jointType() const;
+	JointType jointType() const;
 
-    bool collideConnected() const;
-    void setCollideConnected(bool collideConnected);
+	bool collideConnected() const;
+	void setCollideConnected(bool collideConnected);
 
-    Box2DBody *bodyA() const;
-    void setBodyA(Box2DBody *bodyA);
+	Box2DBody *bodyA() const;
+	void setBodyA(Box2DBody *bodyA);
 
-    Box2DBody *bodyB() const;
-    void setBodyB(Box2DBody *bodyB);
+	Box2DBody *bodyB() const;
+	void setBodyB(Box2DBody *bodyB);
 
-    void initialize();
+	void initialize();
 
-    void nullifyJoint();
-    Box2DWorld *world() const;
-    b2Joint *joint() const;
+	void nullifyJoint();
+	Box2DWorld *world() const;
+	b2Joint *joint() const;
 
-    // QQmlParserStatus interface
-    void classBegin() {}
-    void componentComplete();
+	// QQmlParserStatus interface
+	void classBegin() {}
+	void componentComplete();
 
 protected:
-    virtual b2Joint *createJoint() = 0;
-    void initializeJointDef(b2JointDef &def);
+	virtual b2Joint *createJoint() = 0;
+	void initializeJointDef(b2JointDef &def);
 
 private slots:
-    void bodyACreated();
-    void bodyBCreated();
+	void bodyACreated();
+	void bodyBCreated();
 
 signals:
-    void collideConnectedChanged();
-    void bodyAChanged();
-    void bodyBChanged();
-    void created();
+	void collideConnectedChanged();
+	void bodyAChanged();
+	void bodyBChanged();
+	void created();
 
 private:
-    JointType mJointType;
-    bool mCollideConnected;
-    bool mComponentComplete;
-    bool mInitializePending;
-    Box2DBody *mBodyA;
-    Box2DBody *mBodyB;
-    Box2DWorld *mWorld;
-    b2Joint *mJoint;
+	JointType mJointType;
+	bool mCollideConnected;
+	bool mComponentComplete;
+	bool mInitializePending;
+	Box2DBody *mBodyA;
+	Box2DBody *mBodyB;
+	Box2DWorld *mWorld;
+	b2Joint *mJoint;
 };
 
 inline Box2DJoint::JointType Box2DJoint::jointType() const
 {
-    return mJointType;
+	return mJointType;
 }
 
 inline bool Box2DJoint::collideConnected() const
 {
-    return mCollideConnected;
+	return mCollideConnected;
 }
 
 inline Box2DBody *Box2DJoint::bodyA() const
 {
-    return mBodyA;
+	return mBodyA;
 }
 
 inline Box2DBody *Box2DJoint::bodyB() const
 {
-    return mBodyB;
+	return mBodyB;
 }
 
 inline void Box2DJoint::nullifyJoint()
 {
-    mJoint = 0;
+	mJoint = 0;
 }
 
 inline Box2DWorld *Box2DJoint::world() const
 {
-    return mWorld;
+	return mWorld;
 }
 
 inline b2Joint *Box2DJoint::joint() const
 {
-    return mJoint;
+	return mJoint;
 }
 
 
@@ -154,7 +154,7 @@ inline b2Joint *Box2DJoint::joint() const
  */
 inline Box2DJoint *toBox2DJoint(b2Joint *joint)
 {
-    return static_cast<Box2DJoint*>(joint->GetUserData());
+	return static_cast<Box2DJoint*>(joint->GetUserData());
 }
 
 

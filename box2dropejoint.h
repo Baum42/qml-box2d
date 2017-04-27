@@ -35,64 +35,64 @@ class b2RopeJoint;
 
 class Box2DRopeJoint : public Box2DJoint
 {
-    Q_OBJECT
+	Q_OBJECT
 
-    Q_PROPERTY(QPointF localAnchorA READ localAnchorA WRITE setLocalAnchorA NOTIFY localAnchorAChanged)
-    Q_PROPERTY(QPointF localAnchorB READ localAnchorB WRITE setLocalAnchorB NOTIFY localAnchorBChanged)
-    Q_PROPERTY(float maxLength READ maxLength WRITE setMaxLength NOTIFY maxLengthChanged)
+	Q_PROPERTY(QPointF localAnchorA READ localAnchorA WRITE setLocalAnchorA NOTIFY localAnchorAChanged)
+	Q_PROPERTY(QPointF localAnchorB READ localAnchorB WRITE setLocalAnchorB NOTIFY localAnchorBChanged)
+	Q_PROPERTY(float maxLength READ maxLength WRITE setMaxLength NOTIFY maxLengthChanged)
 
 public:
-    explicit Box2DRopeJoint(QObject *parent = 0);
+	explicit Box2DRopeJoint(QObject *parent = 0);
 
-    QPointF localAnchorA() const;
-    void setLocalAnchorA(const QPointF &localAnchorA);
+	QPointF localAnchorA() const;
+	void setLocalAnchorA(const QPointF &localAnchorA);
 
-    QPointF localAnchorB() const;
-    void setLocalAnchorB(const QPointF &localAnchorB);
+	QPointF localAnchorB() const;
+	void setLocalAnchorB(const QPointF &localAnchorB);
 
-    float maxLength() const;
-    void setMaxLength(float maxLength);
+	float maxLength() const;
+	void setMaxLength(float maxLength);
 
-    b2RopeJoint *ropeJoint() const;
+	b2RopeJoint *ropeJoint() const;
 
-    Q_INVOKABLE QPointF getReactionForce(float32 inv_dt) const;
-    Q_INVOKABLE float getReactionTorque(float32 inv_dt) const;
+	Q_INVOKABLE QPointF getReactionForce(float32 inv_dt) const;
+	Q_INVOKABLE float getReactionTorque(float32 inv_dt) const;
 
 signals:
-    void localAnchorAChanged();
-    void localAnchorBChanged();
-    void maxLengthChanged();
+	void localAnchorAChanged();
+	void localAnchorBChanged();
+	void maxLengthChanged();
 
 protected:
-    b2Joint *createJoint();
+	b2Joint *createJoint();
 
 private:
-    QPointF m_localAnchorA;
-    QPointF m_localAnchorB;
-    float m_maxLength;
+	QPointF m_localAnchorA;
+	QPointF m_localAnchorB;
+	float m_maxLength;
 
-    bool m_defaultLocalAnchorA;
-    bool m_defaultLocalAnchorB;
+	bool m_defaultLocalAnchorA;
+	bool m_defaultLocalAnchorB;
 };
 
 inline QPointF Box2DRopeJoint::localAnchorA() const
 {
-    return m_localAnchorA;
+	return m_localAnchorA;
 }
 
 inline QPointF Box2DRopeJoint::localAnchorB() const
 {
-    return m_localAnchorB;
+	return m_localAnchorB;
 }
 
 inline float Box2DRopeJoint::maxLength() const
 {
-    return m_maxLength;
+	return m_maxLength;
 }
 
 inline b2RopeJoint *Box2DRopeJoint::ropeJoint() const
 {
-    return static_cast<b2RopeJoint*>(joint());
+	return static_cast<b2RopeJoint*>(joint());
 }
 
 #endif // BOX2DROPEJOINT_H

@@ -30,124 +30,124 @@
 #include <QDebug>
 
 Box2DJoint::Box2DJoint(JointType jointType, QObject *parent) :
-    QObject(parent),
-    mJointType(jointType),
-    mCollideConnected(false),
-    mComponentComplete(false),
-    mInitializePending(false),
-    mBodyA(0),
-    mBodyB(0),
-    mWorld(0),
-    mJoint(0)
+	QObject(parent),
+	mJointType(jointType),
+	mCollideConnected(false),
+	mComponentComplete(false),
+	mInitializePending(false),
+	mBodyA(0),
+	mBodyB(0),
+	mWorld(0),
+	mJoint(0)
 {
 }
 
 Box2DJoint::~Box2DJoint()
 {
-    if (mJoint)
-        mWorld->world().DestroyJoint(mJoint);
+	if (mJoint)
+		mWorld->world().DestroyJoint(mJoint);
 }
 
 void Box2DJoint::setCollideConnected(bool collideConnected)
 {
-    if (mCollideConnected == collideConnected)
-        return;
+	if (mCollideConnected == collideConnected)
+		return;
 
-    mCollideConnected = collideConnected;
+	mCollideConnected = collideConnected;
 
-    emit collideConnectedChanged();
+	emit collideConnectedChanged();
 }
 
 void Box2DJoint::setBodyA(Box2DBody *bodyA)
 {
-    if (mBodyA == bodyA)
-        return;
+	if (mBodyA == bodyA)
+		return;
 
-    mBodyA = bodyA;
+	mBodyA = bodyA;
 
-    if (!bodyA || bodyA->body())
-        initialize();
-    else
-        connect(bodyA, SIGNAL(bodyCreated()), this, SLOT(bodyACreated()));
+	if (!bodyA || bodyA->body())
+		initialize();
+	else
+		connect(bodyA, SIGNAL(bodyCreated()), this, SLOT(bodyACreated()));
 
-    emit bodyAChanged();
+	emit bodyAChanged();
 }
 
 void Box2DJoint::setBodyB(Box2DBody *bodyB)
 {
-    if (mBodyB == bodyB)
-        return;
+	if (mBodyB == bodyB)
+		return;
 
-    mBodyB = bodyB;
+	mBodyB = bodyB;
 
-    if (!bodyB || bodyB->body())
-        initialize();
-    else
-        connect(bodyB, SIGNAL(bodyCreated()), this, SLOT(bodyBCreated()));
+	if (!bodyB || bodyB->body())
+		initialize();
+	else
+		connect(bodyB, SIGNAL(bodyCreated()), this, SLOT(bodyBCreated()));
 
-    emit bodyBChanged();
+	emit bodyBChanged();
 }
 
 void Box2DJoint::initialize()
 {
-    // Delay initialization until the component is complete
-    if (!mComponentComplete) {
-        mInitializePending = true;
-        return;
-    }
-    mInitializePending = false;
+	// Delay initialization until the component is complete
+	if (!mComponentComplete) {
+		mInitializePending = true;
+		return;
+	}
+	mInitializePending = false;
 
-    // Destroy any previously created joint
-    if (mJoint) {
-        mWorld->world().DestroyJoint(mJoint);
-        mJoint = 0;
-        mWorld = 0;
-    }
+	// Destroy any previously created joint
+	if (mJoint) {
+		mWorld->world().DestroyJoint(mJoint);
+		mJoint = 0;
+		mWorld = 0;
+	}
 
-    if (!mBodyA || !mBodyB)
-        return;
-    if (!mBodyA->body() || !mBodyB->body())
-        return;
+	if (!mBodyA || !mBodyB)
+		return;
+	if (!mBodyA->body() || !mBodyB->body())
+		return;
 
-    if (mBodyA->world() != mBodyB->world()) {
-        qWarning() << "Joint: bodyA and bodyB are not from the same world";
-        return;
-    }
+	if (mBodyA->world() != mBodyB->world()) {
+		qWarning() << "Joint: bodyA and bodyB are not from the same world";
+		return;
+	}
 
-    if (mBodyA == mBodyB) {
-        qWarning() << "Joint: bodyA and bodyB cannot be the same body";
-        return;
-    }
+	if (mBodyA == mBodyB) {
+		qWarning() << "Joint: bodyA and bodyB cannot be the same body";
+		return;
+	}
 
-    mWorld = mBodyA->world();
-    mJoint = createJoint();
-    if (mJoint)
-        emit created();
+	mWorld = mBodyA->world();
+	mJoint = createJoint();
+	if (mJoint)
+		emit created();
 }
 
 void Box2DJoint::componentComplete()
 {
-    mComponentComplete = true;
-    if (mInitializePending)
-        initialize();
+	mComponentComplete = true;
+	if (mInitializePending)
+		initialize();
 }
 
 void Box2DJoint::initializeJointDef(b2JointDef &def)
 {
-    def.userData = this;
-    def.bodyA = bodyA()->body();
-    def.bodyB = bodyB()->body();
-    def.collideConnected = mCollideConnected;
+	def.userData = this;
+	def.bodyA = bodyA()->body();
+	def.bodyB = bodyB()->body();
+	def.collideConnected = mCollideConnected;
 }
 
 void Box2DJoint::bodyACreated()
 {
-    disconnect(mBodyA, SIGNAL(bodyCreated()), this, SLOT(bodyACreated()));
-    initialize();
+	disconnect(mBodyA, SIGNAL(bodyCreated()), this, SLOT(bodyACreated()));
+	initialize();
 }
 
 void Box2DJoint::bodyBCreated()
 {
-    disconnect(mBodyB, SIGNAL(bodyCreated()), this, SLOT(bodyBCreated()));
-    initialize();
+	disconnect(mBodyB, SIGNAL(bodyCreated()), this, SLOT(bodyBCreated()));
+	initialize();
 }

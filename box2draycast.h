@@ -35,39 +35,39 @@ class Box2DFixture;
 
 class Box2DRayCast : public QObject, public b2RayCastCallback
 {
-    Q_OBJECT
+	Q_OBJECT
 
-    Q_PROPERTY(float maxFraction READ maxFraction WRITE setMaxFraction)
+	Q_PROPERTY(float maxFraction READ maxFraction WRITE setMaxFraction)
 
 public:
-    Box2DRayCast(QObject *parent = 0);
+	Box2DRayCast(QObject *parent = 0);
 
-    float32 ReportFixture(b2Fixture *fixture,
-                          const b2Vec2 &point,
-                          const b2Vec2 &normal,
-                          float32 fraction);
+	float32 ReportFixture(b2Fixture *fixture,
+						  const b2Vec2 &point,
+						  const b2Vec2 &normal,
+						  float32 fraction);
 
-    float maxFraction() const;
-    void setMaxFraction(float maxFraction);
+	float maxFraction() const;
+	void setMaxFraction(float maxFraction);
 
 signals:
-    void fixtureReported(Box2DFixture *fixture,
-                         const QPointF &point,
-                         const QPointF &normal,
-                         qreal fraction);
+	void fixtureReported(Box2DFixture *fixture,
+						 const QPointF &point,
+						 const QPointF &normal,
+						 qreal fraction);
 
 private:
-    float mMaxFraction;
+	float mMaxFraction;
 };
 
 inline float Box2DRayCast::maxFraction() const
 {
-    return mMaxFraction;
+	return mMaxFraction;
 }
 
 inline void Box2DRayCast::setMaxFraction(float maxFraction)
 {
-    mMaxFraction = maxFraction;
+	mMaxFraction = maxFraction;
 }
 
 #endif // BOX2DRAYCAST_H
