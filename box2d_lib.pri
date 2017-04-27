@@ -25,7 +25,6 @@ SOURCES += \
     $$PWD/box2dcontact.cpp \
     $$PWD/box2dbody.cpp \
     $$PWD/box2dfixture.cpp \
-    $$PWD/box2ddebugdraw.cpp \
     $$PWD/box2djoint.cpp \
     $$PWD/box2ddistancejoint.cpp \
     $$PWD/box2dprismaticjoint.cpp \
@@ -46,7 +45,6 @@ HEADERS += \
     $$PWD/box2dcontact.h \
     $$PWD/box2dbody.h \
     $$PWD/box2dfixture.h \
-    $$PWD/box2ddebugdraw.h \
     $$PWD/box2djoint.h \
     $$PWD/box2ddistancejoint.h \
     $$PWD/box2dprismaticjoint.h \
