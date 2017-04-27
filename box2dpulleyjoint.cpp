@@ -23,6 +23,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <QDebug>
+
 #include "box2dpulleyjoint.h"
 
 #include "box2dworld.h"

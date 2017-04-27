@@ -31,7 +31,10 @@
 #ifndef BOX2DBODY_H
 #define BOX2DBODY_H
 
-#include <QQuickItem>
+#include <QObject>
+#include <QQmlParserStatus>
+#include <QPointF>
+#include <QQmlListProperty>
 #include <Box2D.h>
 
 class Box2DFixture;
@@ -46,7 +49,8 @@ class Box2DBody : public QObject, public QQmlParserStatus
 
 	Q_ENUMS(BodyType)
 	Q_PROPERTY(Box2DWorld *world READ world WRITE setWorld NOTIFY worldChanged)
-	Q_PROPERTY(QQuickItem *target READ target WRITE setTarget NOTIFY targetChanged)
+	Q_PROPERTY(QPointF position READ position WRITE setPosition NOTIFY positionChanged)
+	Q_PROPERTY(qreal rotation READ rotation WRITE setRotation NOTIFY rotationChanged)
 	Q_PROPERTY(float linearDamping READ linearDamping WRITE setLinearDamping NOTIFY linearDampingChanged)
 	Q_PROPERTY(float angularDamping READ angularDamping WRITE setAngularDamping NOTIFY angularDampingChanged)
 	Q_PROPERTY(BodyType bodyType READ bodyType WRITE setBodyType NOTIFY bodyTypeChanged)
@@ -76,8 +80,11 @@ public:
 	Box2DWorld *world() const;
 	void setWorld(Box2DWorld *world);
 
-	QQuickItem *target() const;
-	void setTarget(QQuickItem *target);
+	QPointF position() const;
+	void setPosition(QPointF position);
+
+	qreal rotation() const;
+	void setRotation(qreal rotation);
 
 	float linearDamping() const;
 	void setLinearDamping(float linearDamping);
@@ -157,6 +164,7 @@ signals:
 	void bodyCreated();
 	void gravityScaleChanged();
 	void positionChanged();
+	void rotationChanged();
 
 private slots:
 	void markTransformDirty();
@@ -166,7 +174,8 @@ private:
 	void createBody();
 
 	Box2DWorld *mWorld;
-	QQuickItem *mTarget;
+	QPointF mPosition;
+	qreal mRotation;
 	b2Body *mBody;
 	b2BodyDef mBodyDef;
 	bool mComponentComplete;
@@ -178,12 +187,16 @@ private:
 							   Box2DFixture *fixture);
 	static int count_fixture(QQmlListProperty<Box2DFixture> *list);
 	static Box2DFixture *at_fixture(QQmlListProperty<Box2DFixture> *list, int index);
-	QPointF originOffset() const;
 };
 
-inline QQuickItem *Box2DBody::target() const
+inline QPointF Box2DBody::position() const
 {
-	return mTarget;
+	return mPosition;
+}
+
+inline qreal Box2DBody::rotation() const
+{
+	return mRotation;
 }
 
 inline float Box2DBody::linearDamping() const

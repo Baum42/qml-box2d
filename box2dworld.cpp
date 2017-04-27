@@ -307,7 +307,7 @@ void Box2DWorld::step()
 	mSynchronizing = true;
 	for (b2Body *body = mWorld.GetBodyList(); body; body = body->GetNext()) {
 		Box2DBody *b = toBox2DBody(body);
-		if (b->isActive() && b->bodyType() != Box2DBody::Static && b->target())
+		if (b->isActive() && b->bodyType() != Box2DBody::Static)
 			b->synchronize();
 	}
 	mSynchronizing = false;

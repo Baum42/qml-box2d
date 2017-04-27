@@ -57,7 +57,8 @@ static bool sync(b2Vec2 &value, const b2Vec2 &newValue)
 Box2DBody::Box2DBody(QObject *parent) :
 	QObject(parent),
 	mWorld(0),
-	mTarget(0),
+	mPosition(0, 0),
+	mRotation(0),
 	mBody(0),
 	mComponentComplete(false),
 	mTransformDirty(false),
@@ -245,18 +246,6 @@ Box2DFixture *Box2DBody::at_fixture(QQmlListProperty<Box2DFixture> *list, int in
 	return body->mFixtures.at(index);
 }
 
-QPointF Box2DBody::originOffset() const
-{
-	Q_ASSERT(mTarget);
-
-	QPointF origin = -mTarget->transformOriginPoint();
-	qreal c = qCos(-mBodyDef.angle);
-	qreal s = qSin(-mBodyDef.angle);
-
-	return QPointF(origin.x() * c - origin.y() * s - origin.x(),
-				   origin.x() * s + origin.y() * c - origin.y());
-}
-
 void Box2DBody::addFixture(Box2DFixture *fixture)
 {
 	mFixtures.append(fixture);
@@ -277,16 +266,8 @@ void Box2DBody::createBody()
 		return;
 	}
 
-	if (!mTarget)
-		mTarget = qobject_cast<QQuickItem *>(parent());
-
-	if (mTarget) {
-		mBodyDef.angle = toRadians(mTarget->rotation());
-		mBodyDef.position = mWorld->toMeters(
-					mTarget->transformOrigin() == QQuickItem::TopLeft ?
-						mTarget->position() :
-						mTarget->position() + originOffset());
-	}
+	mBodyDef.angle = toRadians(mRotation);
+	mBodyDef.position = mWorld->toMeters(mPosition);
 
 	mBody = mWorld->world().CreateBody(&mBodyDef);
 	mCreatePending = false;
@@ -303,18 +284,13 @@ void Box2DBody::synchronize()
 {
 	Q_ASSERT(mBody);
 
-	if (sync(mBodyDef.angle, mBody->GetAngle()))
-		if (mTarget)
-			mTarget->setRotation(toDegrees(mBodyDef.angle));
+	if (sync(mBodyDef.angle, mBody->GetAngle())) {
+		mRotation = toDegrees(mBodyDef.angle);
+		emit rotationChanged();
+	}
 
 	if (sync(mBodyDef.position, mBody->GetPosition())) {
-		if (mTarget) {
-			mTarget->setPosition(
-						mTarget->transformOrigin() == QQuickItem::TopLeft ?
-							mWorld->toPixels(mBodyDef.position) :
-							mWorld->toPixels(mBodyDef.position) - originOffset());
-
-		}
+		mPosition = mWorld->toPixels(mBodyDef.position);
 		emit positionChanged();
 	}
 }
@@ -351,37 +327,33 @@ void Box2DBody::setWorld(Box2DWorld *world)
 	createBody();
 }
 
-void Box2DBody::setTarget(QQuickItem *target)
+void Box2DBody::setPosition(QPointF position)
 {
-	if (mTarget == target)
+	if(mPosition == position)
 		return;
 
-	if (mTarget)
-		mTarget->disconnect(this);
+	mPosition = position;
+	markTransformDirty();
+	emit positionChanged();
+}
 
-	mTarget = target;
-	mTransformDirty = target != 0;
+void Box2DBody::setRotation(qreal rotation)
+{
+	if(mRotation == rotation)
+		return;
 
-	if (target) {
-		connect(target, SIGNAL(xChanged()), this, SLOT(markTransformDirty()));
-		connect(target, SIGNAL(yChanged()), this, SLOT(markTransformDirty()));
-		connect(target, SIGNAL(rotationChanged()), this, SLOT(markTransformDirty()));
-	}
-
-	emit targetChanged();
+	mRotation = rotation;
+	markTransformDirty();
+	emit rotationChanged();
 }
 
 void Box2DBody::updateTransform()
 {
-	Q_ASSERT(mTarget);
 	Q_ASSERT(mBody);
 	Q_ASSERT(mTransformDirty);
 
-	mBodyDef.angle = toRadians(mTarget->rotation());
-	mBodyDef.position = mWorld->toMeters(
-				mTarget->transformOrigin() == QQuickItem::TopLeft ?
-					mTarget->position() :
-					mTarget->position() + originOffset());
+	mBodyDef.angle = toRadians(mRotation);
+	mBodyDef.position = mWorld->toMeters(mPosition);
 
 	mBody->SetTransform(mBodyDef.position, mBodyDef.angle);
 	mTransformDirty = false;
