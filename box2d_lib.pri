@@ -20,7 +20,6 @@ contains(DEFINES, BOX2D_SYSTEM) {
 }
 
 SOURCES += \
-    $$PWD/box2dplugin.cpp \
     $$PWD/box2dworld.cpp \
     $$PWD/box2dcontact.cpp \
     $$PWD/box2dbody.cpp \
@@ -37,10 +36,10 @@ SOURCES += \
     $$PWD/box2dmousejoint.cpp \
     $$PWD/box2dgearjoint.cpp \
     $$PWD/box2dropejoint.cpp \
-    $$PWD/box2draycast.cpp
+    $$PWD/box2draycast.cpp \
+    $$PWD/box2dcoreplugin.cpp
 
 HEADERS += \
-    $$PWD/box2dplugin.h \
     $$PWD/box2dworld.h \
     $$PWD/box2dcontact.h \
     $$PWD/box2dbody.h \
@@ -57,4 +56,5 @@ HEADERS += \
     $$PWD/box2dmousejoint.h \
     $$PWD/box2dgearjoint.h \
     $$PWD/box2dropejoint.h \
-    $$PWD/box2draycast.h
+    $$PWD/box2draycast.h \
+    $$PWD/box2dcoreplugin.h

@@ -25,7 +25,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include "box2dplugin.h"
+#include "box2dcoreplugin.h"
 
 #include "box2dworld.h"
 #include "box2dbody.h"
@@ -48,15 +48,15 @@
 const int versionMajor = 2;
 const int versionMinor = 0;
 
-Box2DPlugin::Box2DPlugin(QObject *parent) :
+Box2DCorePlugin::Box2DCorePlugin(QObject *parent) :
 	QQmlExtensionPlugin(parent)
 {
 }
 
-void Box2DPlugin::registerTypes(const char *uri)
+void Box2DCorePlugin::registerTypes(const char *uri)
 {
 #if !defined(STATIC_PLUGIN_BOX2D)
-	Q_ASSERT(QLatin1String(uri) == QLatin1String("Box2D"));
+	Q_ASSERT(QLatin1String(uri) == QLatin1String("Box2Dcore"));
 #endif
 
 	qmlRegisterType<Box2DWorld>(uri, versionMajor, versionMinor, "World");

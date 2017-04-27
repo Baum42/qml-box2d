@@ -23,25 +23,25 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#ifndef BOX2DPLUGIN_H
-#define BOX2DPLUGIN_H
+#ifndef BOX2DCOREPLUGIN_H
+#define BOX2DCOREPLUGIN_H
 
 #include <QQmlExtensionPlugin>
 
 /**
  * A plugin that exposes Box2D to QML in the form of declarative items.
  */
-class Q_DECL_EXPORT Box2DPlugin : public QQmlExtensionPlugin
+class Q_DECL_EXPORT Box2DCorePlugin : public QQmlExtensionPlugin
 {
 	Q_OBJECT
 #if !defined(STATIC_PLUGIN_BOX2D)
-	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
+	Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
 #endif
 
 public:
-	explicit Box2DPlugin(QObject *parent = 0);
+	explicit Box2DCorePlugin(QObject *parent = 0);
 
 	void registerTypes(const char *uri);
 };
 
-#endif // BOX2DPLUGIN_H
+#endif // BOX2DCOREPLUGIN_H
