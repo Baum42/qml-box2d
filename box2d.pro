@@ -1,8 +1,7 @@
 TEMPLATE = lib
 CONFIG += plugin
-QT += quick
-TARGET = $$qtLibraryTarget(Box2D)
-TARGETPATH = Box2D
+QT += core qml quick
+TARGET = $$qtLibraryTarget(Box2D-core)
 API_VER=2.0
 MOC_DIR = .moc
 OBJECTS_DIR = .obj
