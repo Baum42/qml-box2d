@@ -28,8 +28,11 @@
 #ifndef BOX2DFIXTURE_H
 #define BOX2DFIXTURE_H
 
-#include <QQuickItem>
+#include <QObject>
 #include <QFlags>
+#include <QSizeF>
+#include <QPointF>
+#include <QVariant>
 
 #include <Box2D.h>
 
@@ -120,7 +123,7 @@ class Box2DBox : public Box2DFixture
 	Q_PROPERTY(qreal rotation READ rotation WRITE setRotation NOTIFY rotationChanged)
 
 public:
-	explicit Box2DBox(QQuickItem *parent = 0)
+	explicit Box2DBox(QObject *parent = 0)
 		: Box2DFixture(parent)
 		, mPosition(0, 0)
 		, mSize(0, 0)
@@ -170,7 +173,7 @@ class Box2DCircle : public Box2DFixture
 	Q_PROPERTY(float radius READ radius WRITE setRadius NOTIFY radiusChanged)
 
 public:
-	explicit Box2DCircle(QQuickItem *parent = 0)
+	explicit Box2DCircle(QObject *parent = 0)
 		: Box2DFixture(parent)
 		, mPosition(0, 0)
 		, mRadius(32)
@@ -208,7 +211,7 @@ class Box2DPolygon : public Box2DFixture
 	Q_PROPERTY(QVariantList vertices READ vertices WRITE setVertices NOTIFY verticesChanged)
 
 public:
-	explicit Box2DPolygon(QQuickItem *parent = 0) :
+	explicit Box2DPolygon(QObject *parent = 0) :
 		Box2DFixture(parent)
 	{ }
 
@@ -236,7 +239,7 @@ class Box2DChain : public Box2DFixture
 	Q_PROPERTY(QPointF nextVertex READ nextVertex WRITE setNextVertex NOTIFY nextVertexChanged)
 
 public:
-	explicit Box2DChain(QQuickItem *parent = 0);
+	explicit Box2DChain(QObject *parent = 0);
 
 	QVariantList vertices() const { return mVertices; }
 	void setVertices(const QVariantList &vertices);
@@ -276,7 +279,7 @@ class Box2DEdge : public Box2DFixture
 	Q_PROPERTY(QVariantList vertices READ vertices WRITE setVertices NOTIFY verticesChanged)
 
 public:
-	explicit Box2DEdge(QQuickItem *parent = 0) :
+	explicit Box2DEdge(QObject *parent = 0) :
 		Box2DFixture(parent)
 	{ }
 

@@ -326,7 +326,7 @@ b2Shape *Box2DPolygon::createShape()
 
 //=================== CHAIN =======================
 
-Box2DChain::Box2DChain(QQuickItem *parent) :
+Box2DChain::Box2DChain(QObject *parent) :
 	Box2DFixture(parent),
 	mLoop(false),
 	mPrevVertexFlag(false),
