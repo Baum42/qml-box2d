@@ -49,5 +49,5 @@ void EngineDriver::stop()
 void EngineDriver::doStep()
 {
 	mWorld->step();
-	QMetaObject::invokeMethod(this, "doStep");
+	QMetaObject::invokeMethod(this, "doStep", Qt::QueuedConnection);
 }
